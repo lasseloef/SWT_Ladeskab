@@ -6,26 +6,38 @@ namespace Ladeskab.Library.Door
 {
     public class Door : IDoor
     {
+        public bool Locked { get; private set; }
+        public bool Open { get; private set; }
+
         public event EventHandler DoorOpenedEvent;
         public event EventHandler DoorClosedEvent;
+
         public void LockDoor()
         {
-            throw new NotImplementedException();
+            if (!Open)
+            {
+                Locked = true;
+            }
         }
 
         public void UnlockDoor()
         {
-            throw new NotImplementedException();
+            Locked = false;
         }
 
         public void OpenDoor()
         {
-            throw new NotImplementedException();
+            if (!Locked)
+            {
+                Open = true;
+                DoorOpenedEvent?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public void CloseDoor()
         {
-            throw new NotImplementedException();
+            Open = false;
+            DoorClosedEvent?.Invoke(this, EventArgs.Empty);
         }
     }
 }
