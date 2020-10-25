@@ -46,5 +46,18 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             Assert.That(result, Is.False);
         }
+
+        [Test]
+        public void StartCharge_Called_CallsUsbChargerStartCharge()
+        {
+            //ARRANGE
+            //Arrange completed in setup
+
+            //ACT
+            uut.StartCharge();
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StartCharge();
+        }
     }
 }
