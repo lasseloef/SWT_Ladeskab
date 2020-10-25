@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>161</y>
+      <w>273</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IUsbCharger
+-
+StartCharge() : void
+StopCharge() : void
+-
+Connected : bool
+CurrentValue : double
+EventHandler&lt;CurrentEventArgs&gt;CurrentValueEvent : event
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>294</x>
+      <y>77</y>
+      <w>91</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>CurrentEventArgs
+-
++Current : double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>105</y>
+      <w>35</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+???</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>322</y>
+      <w>280</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>UsbChargerSimulator
+-
++StartCharge() : void
++StopCharge() : void
++SimulateConnected(bool) : void
++SimulateOverload(bool) : void
+-TimerOnElapsed(object, ElapsedEventArgs) : void
+-OnNewCurrent() : void
+-
++Connected : bool
++CurrentValue : double
++EventHandler&lt;CurrentEventArgs&gt;CurrentValueEvent : event
+-_overload : bool
+-_charging : bool
+-_timer : System.Timers.Timer
+-_ticksSinceStart : int
+-MaxCurrent : const double
+-FullyChargedCurrent : const double
+-OverloadCurrent : const double
+-ChargeTimeMinutes : const int
+-CurrentTickInterval : const int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>252</y>
+      <w>21</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>637</x>
+      <y>161</y>
+      <w>245</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>StationControl
+-
+-RfidDetected(int) : void
+-
+-_state : LadeskabState
+-_charger : IUsbCharger
+-_oldId : int
+-logFile : string
+-LadeskabState : enum{Available, Locked, DoorOpen}
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>476</x>
+      <y>217</y>
+      <w>175</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;230.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>686</x>
+      <y>336</y>
+      <w>84</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IDoor</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>686</x>
+      <y>406</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Door</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>721</x>
+      <y>357</y>
+      <w>21</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>721</x>
+      <y>245</y>
+      <w>21</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;130.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
