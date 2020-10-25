@@ -12,6 +12,12 @@ namespace Ladeskab.Library.Door
         public event EventHandler DoorOpenedEvent;
         public event EventHandler DoorClosedEvent;
 
+        public Door()
+        {
+            Locked = false;
+            Open = false;
+        }
+
         public void LockDoor()
         {
             if (!Open)
