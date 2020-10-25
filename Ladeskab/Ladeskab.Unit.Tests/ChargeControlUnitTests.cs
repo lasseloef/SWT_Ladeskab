@@ -112,5 +112,47 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.NotCharging));
         }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithOne_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 1;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithOne_InvokedEventTypeIsFinishedCharging()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 1;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.FinishedCharging));
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithOne_CalledUsbChargerStopCharge()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 1;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StopCharge();
+        }
     }
 }
