@@ -19,7 +19,7 @@ namespace Ladeskab.Library.ChargeControl
 
         public void StartCharge()
         {
-            throw new NotImplementedException();
+            UsbCharger.StartCharge();
         }
 
         public void StopCharge()
