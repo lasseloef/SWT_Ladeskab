@@ -11,11 +11,20 @@ namespace Ladeskab.Unit.Tests
     public class DoorUnitTests
     {
         private Door uut;
+        private bool DoorOpenedEventRaised;
+        private bool DoorClosedEventRaised;
+
 
         [SetUp]
         public void DoorUnitTestsSetUp()
         {
+            DoorOpenedEventRaised = false;
+            DoorClosedEventRaised = false;
+
             uut = new Door();
+
+            uut.DoorOpenedEvent += (o, e) => { DoorOpenedEventRaised = true; };
+            uut.DoorClosedEvent += (o, e) => { DoorClosedEventRaised = true; };
         }
 
         [Test]
@@ -55,6 +64,32 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             Assert.That(uut.Locked, Is.False);
+        }
+
+        [Test]
+        public void OpenDoor_CalledWithUnlockedDoor_DoorIsOpened()
+        {
+            //ARRANGE
+            uut.UnlockDoor();
+            
+            //ACT
+            uut.OpenDoor();
+
+            //ASSERT
+            Assert.That(uut.Open, Is.True);
+        }
+
+        [Test]
+        public void OpenDoor_CalledWithUnlockedDoor_DoorOpenedEventRaised()
+        {
+            //ARRANGE
+            uut.UnlockDoor();
+
+            //ACT
+            uut.OpenDoor();
+
+            //ASSERT
+            Assert.That(DoorOpenedEventRaised, Is.True);
         }
     }
 }
