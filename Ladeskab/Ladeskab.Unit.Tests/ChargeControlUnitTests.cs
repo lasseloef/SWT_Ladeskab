@@ -18,6 +18,7 @@ namespace Ladeskab.Unit.Tests
         {
             UsbChargerSubstitute = Substitute.For<IUsbCharger>();
             uut = new ChargeControl();
+            uut.UsbCharger = UsbChargerSubstitute;
         }
 
         [Test]
