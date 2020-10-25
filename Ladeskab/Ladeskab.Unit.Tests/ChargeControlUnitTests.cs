@@ -20,6 +20,30 @@ namespace Ladeskab.Unit.Tests
             uut = new ChargeControl();
         }
 
-        
+        [Test]
+        public void IsConnected_UsbChargerReturnsConnected_ReturnsConnected()
+        {
+            //ARRANGE
+            UsbChargerSubstitute.Connected.Returns(true);
+
+            //ACT
+            bool result = uut.IsConnected();
+
+            //ASSERT
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void IsConnected_UsbChargerReturnsNotConnected_ReturnsNotConnected()
+        {
+            //ARRANGE
+            UsbChargerSubstitute.Connected.Returns(false);
+
+            //ACT
+            bool result = uut.IsConnected();
+
+            //ASSERT
+            Assert.That(result, Is.False);
+        }
     }
 }
