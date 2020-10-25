@@ -10,15 +10,27 @@ namespace Ladeskab.Unit.Tests
     [TestFixture]
     public class ChargeControlUnitTests
     {
-        ChargeControl uut;
+        private ChargeControl uut;
         private IUsbCharger UsbChargerSubstitute;
+
+        private bool chargerEventInvoked;
+        private ChargerEventArgs chargerEventArgs;
 
         [SetUp]
         public void ChargeControlUnitTestsSetup()
         {
+            
             UsbChargerSubstitute = Substitute.For<IUsbCharger>();
-            uut = new ChargeControl();
-            uut.UsbCharger = UsbChargerSubstitute;
+            uut = new ChargeControl(UsbChargerSubstitute);
+
+            //Handling ChargeEvents
+            chargerEventInvoked = false;
+            chargerEventArgs = null;
+            uut.ChargeEvent += (o, e) =>
+            {
+                chargerEventInvoked = true;
+                chargerEventArgs = e;
+            };
         }
 
         [Test]
@@ -71,6 +83,19 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             UsbChargerSubstitute.Received().StopCharge();
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_Invoked_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
         }
     }
 }
