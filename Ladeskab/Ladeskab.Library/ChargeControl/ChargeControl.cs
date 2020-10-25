@@ -14,7 +14,7 @@ namespace Ladeskab.Library.ChargeControl
 
         public bool IsConnected()
         {
-            throw new NotImplementedException();
+            return UsbCharger.Connected;
         }
 
         public void StartCharge()
