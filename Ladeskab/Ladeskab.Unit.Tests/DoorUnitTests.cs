@@ -54,10 +54,11 @@ namespace Ladeskab.Unit.Tests
         }
 
         [Test]
-        public void UnlockDoor_Called_DoorIsUnlocked()
+        public void UnlockDoor_CalledWithLockedDoor_DoorIsUnlocked()
         {
             //ARRANGE
-            //Arrange completed in setup
+            uut.CloseDoor();
+            uut.LockDoor();
 
             //ACT
             uut.UnlockDoor();
@@ -116,6 +117,34 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             Assert.That(DoorOpenedEventRaised, Is.False);
+        }
+
+        [Test]
+        public void CloseDoor_CalledWithOpenDoor_DoorIsClosed()
+        {
+            //ARRANGE
+            uut.UnlockDoor();
+            uut.OpenDoor();
+
+            //ACT
+            uut.CloseDoor();
+
+            //ASSERT
+            Assert.That(uut.Open, Is.False);
+        }
+
+        [Test]
+        public void CloseDoor_CalledWithOpenDoor_DoorClosedEventRaised()
+        {
+            //ARRANGE
+            uut.UnlockDoor();
+            uut.OpenDoor();
+
+            //ACT
+            uut.CloseDoor();
+
+            //ASSERT
+            Assert.That(DoorClosedEventRaised, Is.True);
         }
     }
 }
