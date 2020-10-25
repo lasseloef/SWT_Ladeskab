@@ -91,5 +91,31 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             Assert.That(DoorOpenedEventRaised, Is.True);
         }
+
+        [Test]
+        public void OpenDoor_CalledWithLockedDoor_DoorIsNotOpened()
+        {
+            //ARRANGE
+            uut.LockDoor();
+
+            //ACT
+            uut.OpenDoor();
+
+            //ASSERT
+            Assert.That(uut.Open, Is.False);
+        }
+
+        [Test]
+        public void OpenDoor_CalledWithLockedDoor_DoorOpenedEventRaised()
+        {
+            //ARRANGE
+            uut.LockDoor();
+
+            //ACT
+            uut.OpenDoor();
+
+            //ASSERT
+            Assert.That(DoorOpenedEventRaised, Is.False);
+        }
     }
 }
