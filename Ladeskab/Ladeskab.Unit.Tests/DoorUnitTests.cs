@@ -43,5 +43,18 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             Assert.That(uut.Locked, Is.False);
         }
+
+        [Test]
+        public void UnlockDoor_Called_DoorIsUnlocked()
+        {
+            //ARRANGE
+            //Arrange completed in setup
+
+            //ACT
+            uut.UnlockDoor();
+
+            //ASSERT
+            Assert.That(uut.Locked, Is.False);
+        }
     }
 }
