@@ -24,7 +24,7 @@ namespace Ladeskab.Library.ChargeControl
 
         public void StopCharge()
         {
-            throw new NotImplementedException();
+            UsbCharger.StopCharge();
         }
 
         public event EventHandler<ChargerEventArgs> ChargeEvent;
