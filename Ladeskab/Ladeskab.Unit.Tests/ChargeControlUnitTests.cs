@@ -59,5 +59,18 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             UsbChargerSubstitute.Received().StartCharge();
         }
+
+        [Test]
+        public void StopCharge_Called_CallsUsbChargerStopCharge()
+        {
+            //ARRANGE
+            //Arrange completed in setup
+
+            //ACT
+            uut.StopCharge();
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StopCharge();
+        }
     }
 }
