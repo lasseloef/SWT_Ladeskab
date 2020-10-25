@@ -10,6 +10,49 @@ namespace Ladeskab.Library.ChargeControl
 
         public ChargeControl()
         {
+            UsbCharger.CurrentValueEvent += OnUsbChargerCurrentValueEvent;
+        }
+
+        private void OnUsbChargerCurrentValueEvent(object sender, CurrentEventArgs args)
+        {
+            //Not charging
+            if (args.Current == 0)
+            {
+                //Inform subscribers
+                ChargerEventArgs eventArgs = new ChargerEventArgs();
+                eventArgs.Type = ChargerEventType.NotCharging;
+
+                ChargeEvent.Invoke(this, eventArgs);
+            }
+            //Completed charging
+            else if (0 < args.Current && args.Current <= 5)
+            {
+                //Stop charging and inform subscribers
+                UsbCharger.StopCharge();
+                ChargerEventArgs eventArgs = new ChargerEventArgs();
+                eventArgs.Type = ChargerEventType.FinishedCharging;
+
+                ChargeEvent.Invoke(this,eventArgs);
+            }
+            //Charging normally
+            else if (5 < args.Current && args.Current <= 500)
+            {
+                //Continue charging and inform subscribers
+                ChargerEventArgs eventArgs = new ChargerEventArgs();
+                eventArgs.Type = ChargerEventType.ChargingNormally;
+
+                ChargeEvent.Invoke(this, eventArgs);
+            }
+            //Charge error
+            else if (500 < args.Current)
+            {
+                //Stop charging and inform subscribers
+                UsbCharger.StopCharge();
+                ChargerEventArgs eventArgs = new ChargerEventArgs();
+                eventArgs.Type = ChargerEventType.ChargingError;
+
+                ChargeEvent.Invoke(this, eventArgs);
+            }
         }
 
         public bool IsConnected()
