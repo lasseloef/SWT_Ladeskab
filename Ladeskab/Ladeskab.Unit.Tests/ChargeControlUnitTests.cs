@@ -33,6 +33,8 @@ namespace Ladeskab.Unit.Tests
             };
         }
 
+        #region IsConnected
+
         [Test]
         public void IsConnected_UsbChargerReturnsConnected_ReturnsConnected()
         {
@@ -59,6 +61,9 @@ namespace Ladeskab.Unit.Tests
             Assert.That(result, Is.False);
         }
 
+        #endregion
+
+        #region StartCharge
         [Test]
         public void StartCharge_Called_CallsUsbChargerStartCharge()
         {
@@ -72,6 +77,9 @@ namespace Ladeskab.Unit.Tests
             UsbChargerSubstitute.Received().StartCharge();
         }
 
+        #endregion
+
+        #region StopCharge
         [Test]
         public void StopCharge_Called_CallsUsbChargerStopCharge()
         {
@@ -85,6 +93,11 @@ namespace Ladeskab.Unit.Tests
             UsbChargerSubstitute.Received().StopCharge();
         }
 
+        #endregion
+
+        #region OnUsbChargerCurrentValueEvent
+
+        #region NotCharging
         [Test]
         public void OnUsbChargerCurrentValueEvent_InvokedWithZero_InvokesChargeEvent()
         {
@@ -113,6 +126,9 @@ namespace Ladeskab.Unit.Tests
             Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.NotCharging));
         }
 
+        #endregion
+
+        #region FinishedChargingLowerValueBound
         [Test]
         public void OnUsbChargerCurrentValueEvent_InvokedWithOne_InvokesChargeEvent()
         {
@@ -154,5 +170,204 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             UsbChargerSubstitute.Received().StopCharge();
         }
+
+        #endregion
+
+        #region FinishedChargingUpperValueBound
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFive_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 5;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFive_InvokedEventTypeIsFinishedCharging()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 5;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.FinishedCharging));
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFive_CalledUsbChargerStopCharge()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 5;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StopCharge();
+        }
+
+        #endregion
+
+        #region NormalChargingLowerValueBound
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithSix_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 6;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithSix_InvokedEventTypeIsChargingNormally()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 6;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.ChargingNormally));
+        }
+        #endregion
+
+        #region NormalChargingUpperValueBound
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFiveHundred_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 500;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFiveHundred_InvokedEventTypeIsChargingNormally()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 500;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.ChargingNormally));
+        }
+        #endregion
+
+        #region ChargingErrorLowerBound
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFiveHundredAndOne_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 501;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFiveHundredAndOne_InvokedEventTypeIsChargingError()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 501;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.ChargingError));
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithFiveHundredAndOne_CalledUsbChargerStopCharge()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = 501;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StopCharge();
+        }
+
+        #endregion
+
+        #region ChargingErrorUpperBound
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithIntMax_InvokesChargeEvent()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = int.MaxValue;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventInvoked, Is.True);
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithIntMax_InvokedEventTypeIsChargingError()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = int.MaxValue;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(chargerEventArgs.Type, Is.EqualTo(ChargerEventType.ChargingError));
+        }
+
+        [Test]
+        public void OnUsbChargerCurrentValueEvent_InvokedWithIntMax_CalledUsbChargerStopCharge()
+        {
+            //ARRANGE
+            CurrentEventArgs args = new CurrentEventArgs();
+            args.Current = int.MaxValue;
+
+            //ACT
+            UsbChargerSubstitute.CurrentValueEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            UsbChargerSubstitute.Received().StopCharge();
+        }
+        #endregion
+
+        #endregion
     }
 }
