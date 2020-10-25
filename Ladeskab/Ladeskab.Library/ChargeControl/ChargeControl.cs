@@ -8,8 +8,9 @@ namespace Ladeskab.Library.ChargeControl
     {
         public IUsbCharger UsbCharger { get; set; }
 
-        public ChargeControl()
+        public ChargeControl(IUsbCharger usbCharger)
         {
+            UsbCharger = usbCharger;
             UsbCharger.CurrentValueEvent += OnUsbChargerCurrentValueEvent;
         }
 
