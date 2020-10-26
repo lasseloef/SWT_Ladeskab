@@ -106,7 +106,7 @@ namespace Ladeskab.Unit.Tests
             _chargeControlSubstitute.ChargeEvent += Raise.EventWith(new object(), chargerArgs);
 
             //ASSERT
-            _uut.State.ReceivedWithAnyArgs().HandleCharge(default);
+            _uut.State.ReceivedWithAnyArgs().HandleCharge(default, default);
 
         }
         #endregion
