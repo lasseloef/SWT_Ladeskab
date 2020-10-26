@@ -225,7 +225,7 @@ namespace Ladeskab.Unit.Tests
         }
 
         [Test]
-        public void HandleCharge_CalledWithNotCharging_DisplaysCorrectMessage()
+        public void HandleCharge_CalledWithChargingError_DisplaysCorrectMessage()
         {
             //ARRANGE
             ChargerEventArgs args = new ChargerEventArgs();
