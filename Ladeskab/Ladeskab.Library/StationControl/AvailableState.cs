@@ -7,12 +7,17 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(IControl stationControl)
         {
-            stationControl.Disp.DisplayMessage("Please connect a phone");
+            if(!stationControl.ChargeControl.IsConnected())
+                stationControl.Disp.DisplayMessage("Please connect a phone");
+            else
+            {
+                stationControl.Disp.DisplayMessage("Please close the door");
+            }
         }
 
         public void HandleClosedDoor(IControl stationControl)
         {
-
+            stationControl.Disp.DisplayMessage("Scan RFID");
         }
 
         public void HandleRfid(IControl stationControl, int id)
