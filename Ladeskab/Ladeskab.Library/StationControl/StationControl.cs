@@ -9,8 +9,8 @@ namespace Ladeskab.Library.StationControl
 {
     public class StationControl : IControl
     {
-        private ILadeskabState State;
-        //evt public
+        public ILadeskabState State;
+        //evt public getter private setter
         public ILadeskabState Available;
         public ILadeskabState DoorOpen;
         public ILadeskabState Locked;
@@ -37,12 +37,13 @@ namespace Ladeskab.Library.StationControl
             Door.DoorClosedEvent += OnDoorClosed;
         }
 
-        public StationControl(ILogger logger, IDisplay display, ILadeskabState available, ILadeskabState doorOpen,
+        public StationControl(ILogger logger, IDisplay display, IDoor door, ILadeskabState available, ILadeskabState doorOpen,
             ILadeskabState locked, IRfidReader rfid, IChargeControl chargeCtrl)
         {
             //Modules
             Logger = logger;
             Disp = display;
+            Door = door;
             RfidReader = rfid;
             ChargeControl = chargeCtrl;
 
