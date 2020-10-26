@@ -36,6 +36,12 @@ namespace Ladeskab.Library.StationControl
             if (args.Type == ChargerEventType.ChargingError)
             {
                 stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+            }else if (args.Type == ChargerEventType.FinishedCharging)
+            {
+                stationControl.Disp.DisplayMessage("Phone charging complete. Please scan RFID tag and remove phone");
+            }else if (args.Type == ChargerEventType.ChargingNormally)
+            {
+                stationControl.Disp.DisplayMessage("Charging in progress...");
             }
         }
 
