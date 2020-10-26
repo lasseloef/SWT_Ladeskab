@@ -33,7 +33,10 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
-            throw new NotImplementedException();
+            if (args.Type == ChargerEventType.ChargingError)
+            {
+                stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+            }
         }
 
     }
