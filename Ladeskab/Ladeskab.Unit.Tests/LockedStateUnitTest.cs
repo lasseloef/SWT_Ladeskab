@@ -180,7 +180,7 @@ namespace Ladeskab.Unit.Tests
         }
 
         [Test]
-        public void HandleCharge_CalledWithChargingNormally_MakesNoCalls()
+        public void HandleCharge_CalledWithChargingNormally_DisplaysCorrectMessage()
         {
             //ARRANGE
             ChargerEventArgs args = new ChargerEventArgs();
@@ -191,11 +191,11 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+            controlSubstitute.Disp.Received().DisplayMessage("Charging in progress...");
         }
 
         [Test]
-        public void HandleCharge_CalledWithFinishedCharging_MakesNoCalls()
+        public void HandleCharge_CalledWithFinishedCharging_DisplaysCorrectMessage()
         {
             //ARRANGE
             ChargerEventArgs args = new ChargerEventArgs();
@@ -205,8 +205,7 @@ namespace Ladeskab.Unit.Tests
             uut.HandleCharge(controlSubstitute, args);
 
             //ASSERT
-            //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+            controlSubstitute.Disp.Received().DisplayMessage("Phone charging complete. Please scan RFID tag and remove phone");
         }
 
         [Test]
