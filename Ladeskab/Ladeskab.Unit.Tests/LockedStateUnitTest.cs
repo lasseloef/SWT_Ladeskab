@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Ladeskab.Library.StationControl;
 using NSubstitute;
@@ -32,6 +33,20 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             controlSubstitute.Disp.Received().DisplayMessage("ERROR: Door is locked!");
+        }
+
+        [Test]
+        public void HandleClosedDoor_Called_stationControlReceivedNoCalls()
+        {
+            //ARRANGE
+            //Arrange step completed in setup
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            //Assert that substitute received no calls
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
         }
     }
 }
