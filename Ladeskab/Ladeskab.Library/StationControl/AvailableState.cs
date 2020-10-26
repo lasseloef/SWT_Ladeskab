@@ -5,17 +5,17 @@ namespace Ladeskab.Library.StationControl
 {
     public class AvailableState : ILadeskabState
     {
-        public void HandleOpenDoor(StationControl stationControl)
+        public void HandleOpenDoor(IControl stationControl)
         {
             stationControl.Disp.DisplayMessage("Please connect a phone");
         }
 
-        public void HandleClosedDoor(StationControl stationControl)
+        public void HandleClosedDoor(IControl stationControl)
         {
 
         }
 
-        public void HandleRfid(StationControl stationControl, int id)
+        public void HandleRfid(IControl stationControl, int id)
         {
             if (!stationControl.ChargeControl.IsConnected())
             {
@@ -30,7 +30,7 @@ namespace Ladeskab.Library.StationControl
             }
         }
 
-        public void HandleCharge(StationControl stationControl, ChargerEventArgs args)
+        public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
             throw new NotImplementedException();
         }
