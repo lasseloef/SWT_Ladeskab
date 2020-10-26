@@ -35,6 +35,7 @@ namespace Ladeskab.Library.StationControl
                 stationControl.OldId = id;
                 stationControl.Door.LockDoor();
                 stationControl.Logger.LogDoorLocked(id);
+                stationControl.ChargeControl.StartCharge();
                 stationControl.SetState(stationControl.Locked);
             }
         }
