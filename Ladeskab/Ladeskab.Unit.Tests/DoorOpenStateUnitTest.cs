@@ -33,5 +33,31 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
         }
+
+        [Test]
+        public void HandleClosedDoor_Called_stationControlStateSetToAvailable()
+        {
+            //ARRANGE
+            //Arrange step completed in setup
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Received().SetState(controlSubstitute.Available);
+        }
+
+        [Test]
+        public void HandleClosedDoor_Called_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //Arrange step completed in setup
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Scan RFID");
+        }
     }
 }
