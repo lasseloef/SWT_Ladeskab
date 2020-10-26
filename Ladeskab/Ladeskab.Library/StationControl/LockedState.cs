@@ -15,7 +15,7 @@ namespace Ladeskab.Library.StationControl
 
         }
 
-        public void HandleRfid(StationControl stationControl)
+        public void HandleRfid(StationControl stationControl, int id)
         {
 
         }

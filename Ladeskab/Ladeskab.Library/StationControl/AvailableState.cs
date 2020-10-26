@@ -6,7 +6,7 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(StationControl stationControl)
         {
-            stationControl.Disp.DisplayMessage("Please close the door");
+            stationControl.Disp.DisplayMessage("Please connect a phone");
         }
 
         public void HandleClosedDoor(StationControl stationControl)
@@ -25,6 +25,7 @@ namespace Ladeskab.Library.StationControl
                 stationControl.OldId = id;
                 stationControl.Door.LockDoor();
                 stationControl.Logger.LogDoorLocked(id);
+                stationControl.SetState(stationControl.Locked);
             }
         }
 

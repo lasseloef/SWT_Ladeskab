@@ -9,11 +9,12 @@ namespace Ladeskab.Library.StationControl
 {
     public class StationControl : IControl
     {
-        public ILadeskabState State;
-        private ILadeskabState _available;
-        private ILadeskabState _doorOpen;
-        private ILadeskabState _locked;
-        private IRfidReader _rfidReader;
+        private ILadeskabState State;
+        //evt public
+        public ILadeskabState Available;
+        public ILadeskabState DoorOpen;
+        public ILadeskabState Locked;
+        public IRfidReader RfidReader;
         public IChargeControl ChargeControl;
         public ILogger Logger;
         public IDisplay Disp;
@@ -26,12 +27,12 @@ namespace Ladeskab.Library.StationControl
             Disp = display;
 
             //States
-            _available = new AvailableState();
-            _doorOpen = new DoorOpenState();
-            _locked = new LockedState();
+            Available = new AvailableState();
+            DoorOpen = new DoorOpenState();
+            Locked = new LockedState();
 
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
-            _rfidReader.RfidReadEvent += OnRfidReaderRfidRead;
+            RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;
         }
@@ -42,20 +43,20 @@ namespace Ladeskab.Library.StationControl
             //Modules
             Logger = logger;
             Disp = display;
-            _rfidReader = rfid;
+            RfidReader = rfid;
             ChargeControl = chargeCtrl;
 
             //States
-            _available = available;
-            _doorOpen = doorOpen;
-            _locked = locked;
+            Available = available;
+            DoorOpen = doorOpen;
+            Locked = locked;
 
         }
 
         public void Start()
         {
             //Sæt evt. i constructor
-            State = _available;
+            State = Available;
             Door.UnlockDoor();
             Disp.DisplayMessage("Scan RFID");
         }
