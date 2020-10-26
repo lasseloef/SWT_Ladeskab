@@ -7,17 +7,21 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(IControl stationControl)
         {
-            if(!stationControl.ChargeControl.IsConnected())
+            if (!stationControl.ChargeControl.IsConnected())
+            {
                 stationControl.Disp.DisplayMessage("Please connect a phone");
+                stationControl.SetState(stationControl.DoorOpen);
+            }
             else
             {
                 stationControl.Disp.DisplayMessage("Please close the door");
+                stationControl.SetState(stationControl.DoorOpen);
             }
         }
 
         public void HandleClosedDoor(IControl stationControl)
         {
-            stationControl.Disp.DisplayMessage("Scan RFID");
+            //Do nothing, door is already closed
         }
 
         public void HandleRfid(IControl stationControl, int id)
@@ -37,7 +41,10 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
-            throw new NotImplementedException();
+            if (args.Type == ChargerEventType.ChargingError)
+            {
+                stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+            }
         }
     }
 }
