@@ -42,8 +42,23 @@ namespace Ladeskab.Unit.Tests
             _uut = new StationControl(_loggerSubstitute, _displaySubstitute, _doorSubstitute, _availableSubstitute, 
                 _doorOpenSubstitute, _lockedSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute);
 
-            _uut.State = _availableSubstitute;
+            _uut.SetState(_availableSubstitute);
         }
+
+        #region ctor
+
+        [Test]
+        public void ctor_Modules()
+        {
+            _uut = new StationControl(_loggerSubstitute, _displaySubstitute, _doorSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute);
+
+            Assert.That(_uut.Logger, Is.SameAs(_loggerSubstitute));
+            Assert.That(_uut.Disp, Is.SameAs(_displaySubstitute));
+            Assert.That(_uut.Door, Is.SameAs(_doorSubstitute));
+            Assert.That(_uut.RfidReader, Is.SameAs(_rfidReaderSubstitute));
+            Assert.That(_uut.ChargeControl, Is.SameAs(_chargeControlSubstitute));
+        }
+        #endregion
 
         #region Start
         [Test]
@@ -91,7 +106,7 @@ namespace Ladeskab.Unit.Tests
             _chargeControlSubstitute.ChargeEvent += Raise.EventWith(new object(), chargerArgs);
 
             //ASSERT
-            _uut.State.ReceivedWithAnyArgs().HandleCharge(default);
+            _uut.State.ReceivedWithAnyArgs().HandleCharge(default, default);
 
         }
         #endregion

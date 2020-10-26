@@ -9,28 +9,33 @@ namespace Ladeskab.Library.StationControl
 {
     public class StationControl : IControl
     {
-        public ILadeskabState State;
+        public ILadeskabState State { get; private set; }
         //evt public getter private setter
-        public ILadeskabState Available;
-        public ILadeskabState DoorOpen;
-        public ILadeskabState Locked;
-        public IRfidReader RfidReader;
-        public IChargeControl ChargeControl;
-        public ILogger Logger;
-        public IDisplay Disp;
-        public IDoor Door;
-        public int OldId;
+        public ILadeskabState Available { get; private set; }
+        public ILadeskabState DoorOpen { get; private set; }
+        public ILadeskabState Locked { get; private set; }
+        public IRfidReader RfidReader { get; private set; }
+        public IChargeControl ChargeControl { get; private set; }
+        public ILogger Logger { get; private set; }
+        public IDisplay Disp { get; private set; }
+        public IDoor Door { get; private set; }
+        public int OldId { get; set; }
 
-        public StationControl(ILogger logger, IDisplay display)
+        public StationControl(ILogger logger, IDisplay display, IDoor door, IRfidReader rfid, IChargeControl chargeCtrl)
         {
+            //Modules
             Logger = logger;
             Disp = display;
+            Door = door;
+            RfidReader = rfid;
+            ChargeControl = chargeCtrl;
 
             //States
             Available = new AvailableState();
             DoorOpen = new DoorOpenState();
             Locked = new LockedState();
 
+            //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
@@ -51,7 +56,6 @@ namespace Ladeskab.Library.StationControl
             Available = available;
             DoorOpen = doorOpen;
             Locked = locked;
-
         }
 
         public void Start()
@@ -64,7 +68,7 @@ namespace Ladeskab.Library.StationControl
 
         public void OnChargeControlChargeEvent(object sender, ChargerEventArgs e)
         {
-            State.HandleCharge(this);
+            State.HandleCharge(this, e);
         }
 
         public void OnRfidReaderRfidRead(object sender, RfidReadEventArgs e)

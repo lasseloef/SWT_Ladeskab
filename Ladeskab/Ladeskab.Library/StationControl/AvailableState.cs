@@ -1,20 +1,26 @@
 ﻿using System;
+using Ladeskab.Library.ChargeControl;
 
 namespace Ladeskab.Library.StationControl
 {
     public class AvailableState : ILadeskabState
     {
-        public void HandleOpenDoor(StationControl stationControl)
+        public void HandleOpenDoor(IControl stationControl)
         {
-            stationControl.Disp.DisplayMessage("Please connect a phone");
+            if(!stationControl.ChargeControl.IsConnected())
+                stationControl.Disp.DisplayMessage("Please connect a phone");
+            else
+            {
+                stationControl.Disp.DisplayMessage("Please close the door");
+            }
         }
 
-        public void HandleClosedDoor(StationControl stationControl)
+        public void HandleClosedDoor(IControl stationControl)
         {
-
+            stationControl.Disp.DisplayMessage("Scan RFID");
         }
 
-        public void HandleRfid(StationControl stationControl, int id)
+        public void HandleRfid(IControl stationControl, int id)
         {
             if (!stationControl.ChargeControl.IsConnected())
             {
@@ -29,9 +35,9 @@ namespace Ladeskab.Library.StationControl
             }
         }
 
-        public void HandleCharge(StationControl stationControl)
+        public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

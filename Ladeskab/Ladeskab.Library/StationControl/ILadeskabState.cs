@@ -1,10 +1,12 @@
-﻿namespace Ladeskab.Library.StationControl
+﻿using Ladeskab.Library.ChargeControl;
+
+namespace Ladeskab.Library.StationControl
 {
     public interface ILadeskabState
     {
-        void HandleOpenDoor(StationControl stationControl);
-        void HandleClosedDoor(StationControl stationControl);
-        void HandleRfid(StationControl stationControl, int id);
-        void HandleCharge(StationControl stationControl);
+        void HandleOpenDoor(IControl stationControl);
+        void HandleClosedDoor(IControl stationControl);
+        void HandleRfid(IControl stationControl, int id);
+        void HandleCharge(IControl stationControl, ChargerEventArgs args);
     }
 }
