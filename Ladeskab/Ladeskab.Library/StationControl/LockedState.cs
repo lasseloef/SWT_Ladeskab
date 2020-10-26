@@ -33,15 +33,23 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
-            if (args.Type == ChargerEventType.ChargingError)
+
+            switch (args.Type)
             {
-                stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
-            }else if (args.Type == ChargerEventType.FinishedCharging)
-            {
-                stationControl.Disp.DisplayMessage("Phone charging complete. Please scan RFID tag and remove phone");
-            }else if (args.Type == ChargerEventType.ChargingNormally)
-            {
-                stationControl.Disp.DisplayMessage("Charging in progress...");
+                case ChargerEventType.ChargingError:
+                    stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+                    break;
+
+                case ChargerEventType.ChargingNormally:
+                    stationControl.Disp.DisplayMessage("Charging in progress...");
+                    break;
+
+                case ChargerEventType.FinishedCharging:
+                    stationControl.Disp.DisplayMessage("Phone charging complete. Please scan RFID tag and remove phone");
+                    break;
+
+                case ChargerEventType.NotCharging:
+                    break;
             }
         }
 
