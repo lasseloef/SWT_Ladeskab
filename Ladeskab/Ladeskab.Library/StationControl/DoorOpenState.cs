@@ -5,24 +5,24 @@ namespace Ladeskab.Library.StationControl
 {
     public class DoorOpenState : ILadeskabState
     {
-        public void HandleOpenDoor(StationControl stationControl)
+        public void HandleOpenDoor(IControl stationControl)
         {
             //Do nothing, door is already open
         }
 
-        public void HandleClosedDoor(StationControl stationControl)
+        public void HandleClosedDoor(IControl stationControl)
         {
-            stationControl.State = stationControl.Available;
+            stationControl.SetState(stationControl.Available);
             stationControl.Disp.DisplayMessage("Scan RFID");
         }
 
-        public void HandleRfid(StationControl stationControl, int id)
+        public void HandleRfid(IControl stationControl, int id)
         {
             stationControl.Disp.DisplayMessage("Please close the door");
             //Do nothing else, door needs to be closed for rfid to work
         }
 
-        public void HandleCharge(StationControl stationControl, ChargerEventArgs args)
+        public void HandleCharge(IControl stationControl, ChargerEventArgs args)
         {
             if (args.Type == ChargerEventType.ChargingError)
             {

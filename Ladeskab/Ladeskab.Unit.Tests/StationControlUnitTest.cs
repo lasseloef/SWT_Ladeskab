@@ -42,7 +42,7 @@ namespace Ladeskab.Unit.Tests
             _uut = new StationControl(_loggerSubstitute, _displaySubstitute, _doorSubstitute, _availableSubstitute, 
                 _doorOpenSubstitute, _lockedSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute);
 
-            _uut.State = _availableSubstitute;
+            _uut.SetState(_availableSubstitute);
         }
 
         #region ctor
