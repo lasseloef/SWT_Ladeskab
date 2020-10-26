@@ -45,6 +45,21 @@ namespace Ladeskab.Unit.Tests
             _uut.State = _availableSubstitute;
         }
 
+        #region ctor
+
+        [Test]
+        public void ctor_Modules()
+        {
+            _uut = new StationControl(_loggerSubstitute, _displaySubstitute, _doorSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute);
+
+            Assert.That(_uut.Logger, Is.SameAs(_loggerSubstitute));
+            Assert.That(_uut.Disp, Is.SameAs(_displaySubstitute));
+            Assert.That(_uut.Door, Is.SameAs(_doorSubstitute));
+            Assert.That(_uut.RfidReader, Is.SameAs(_rfidReaderSubstitute));
+            Assert.That(_uut.ChargeControl, Is.SameAs(_chargeControlSubstitute));
+        }
+        #endregion
+
         #region Start
         [Test]
         public void Start_StateEqualsAvailable_ReturnsTrue()

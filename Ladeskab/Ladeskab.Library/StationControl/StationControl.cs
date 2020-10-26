@@ -21,16 +21,21 @@ namespace Ladeskab.Library.StationControl
         public IDoor Door;
         public int OldId;
 
-        public StationControl(ILogger logger, IDisplay display)
+        public StationControl(ILogger logger, IDisplay display, IDoor door, IRfidReader rfid, IChargeControl chargeCtrl)
         {
+            //Modules
             Logger = logger;
             Disp = display;
+            Door = door;
+            RfidReader = rfid;
+            ChargeControl = chargeCtrl;
 
             //States
             Available = new AvailableState();
             DoorOpen = new DoorOpenState();
             Locked = new LockedState();
 
+            //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
@@ -51,7 +56,6 @@ namespace Ladeskab.Library.StationControl
             Available = available;
             DoorOpen = doorOpen;
             Locked = locked;
-
         }
 
         public void Start()
