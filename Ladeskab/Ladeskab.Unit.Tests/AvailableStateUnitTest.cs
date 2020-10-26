@@ -74,5 +74,19 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             controlSubstitute.Received().SetState(controlSubstitute.DoorOpen);
         }
+
+        [Test]
+        public void HandleClosedDoor_Called_DoesNothing()
+        {
+            //ARRANGE
+            //Arrange step completed in setup
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            //Assert that substitute received no calls
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
     }
 }
