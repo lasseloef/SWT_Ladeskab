@@ -40,6 +40,8 @@ namespace Ladeskab.Library.StationControl
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;
+
+            OldId = 0;
         }
 
         public StationControl(ILogger logger, IDisplay display, IDoor door, ILadeskabState available, ILadeskabState doorOpen,
@@ -56,6 +58,8 @@ namespace Ladeskab.Library.StationControl
             Available = available;
             DoorOpen = doorOpen;
             Locked = locked;
+
+            OldId = 0;
         }
 
         public void Start()

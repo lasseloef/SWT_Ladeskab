@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Text;
 using Ladeskab.Library.ChargeControl;
 using Ladeskab.Library.Display;
@@ -57,6 +58,154 @@ namespace Ladeskab.Unit.Tests
             Assert.That(_uut.Door, Is.SameAs(_doorSubstitute));
             Assert.That(_uut.RfidReader, Is.SameAs(_rfidReaderSubstitute));
             Assert.That(_uut.ChargeControl, Is.SameAs(_chargeControlSubstitute));
+        }
+        #endregion
+
+        #region Setters and getters
+
+        [Test]
+        public void OldIDGet_GetDefaultValue_Returns0()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            int result = _uut.OldId;
+
+            //ASSERT
+            Assert.That(result, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void OldIDSet_SetValue_ValueIsSet()
+        {
+            //ARRANGE
+            _uut.OldId = 1234;
+
+            //ACT
+            int result = _uut.OldId;
+
+            //ASSERT
+            Assert.That(result, Is.EqualTo(1234));
+        }
+
+        [Test]
+        public void DoorOpenGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            ILadeskabState returnedState = _uut.DoorOpen;
+
+            //ASSERT
+            Assert.That(returnedState, Is.EqualTo(_doorOpenSubstitute));
+        }
+
+        //Setter for DoorOpen is private
+
+        [Test]
+        public void LockedGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            ILadeskabState returnedState = _uut.Locked;
+
+            //ASSERT
+            Assert.That(returnedState, Is.EqualTo(_lockedSubstitute));
+        }
+
+        [Test]
+        public void StateGet_GetCalled_ReturnsDefaultSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            ILadeskabState returnedState = _uut.State;
+
+            //ASSERT
+            Assert.That(returnedState, Is.EqualTo(_availableSubstitute));
+        }
+
+        [Test]
+        public void AvailableGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            ILadeskabState returnedState = _uut.Available;
+
+            //ASSERT
+            Assert.That(returnedState, Is.EqualTo(_availableSubstitute));
+        }
+
+        [Test]
+        public void RfidReaderGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            IRfidReader returnedRfidReader = _uut.RfidReader;
+
+            //ASSERT
+            Assert.That(returnedRfidReader, Is.EqualTo(_rfidReaderSubstitute));
+        }
+
+        [Test]
+        public void ChargeControlGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            IChargeControl returnedChargeControl = _uut.ChargeControl;
+
+            //ASSERT
+            Assert.That(returnedChargeControl, Is.EqualTo(_chargeControlSubstitute));
+        }
+
+        [Test]
+        public void LoggerGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            ILogger returnedLogger = _uut.Logger;
+
+            //ASSERT
+            Assert.That(returnedLogger, Is.EqualTo(_loggerSubstitute));
+        }
+
+        [Test]
+        public void DispGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            IDisplay returnedDisplay = _uut.Disp;
+
+            //ASSERT
+            Assert.That(returnedDisplay, Is.EqualTo(_displaySubstitute));
+        }
+
+        [Test]
+        public void DoorGet_GetCalled_ReturnsSubstitute()
+        {
+            //ARRANGE
+            //Already completed in setup
+
+            //ACT
+            IDoor returnedDoor = _uut.Door;
+
+            //ASSERT
+            Assert.That(returnedDoor, Is.EqualTo(_doorSubstitute));
         }
         #endregion
 
