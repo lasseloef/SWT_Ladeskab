@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Ladeskab.Library.ChargeControl;
 using Ladeskab.Library.StationControl;
 using NSubstitute;
 using NUnit.Framework;
@@ -176,6 +177,66 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             controlSubstitute.Received().SetState(controlSubstitute.Available);
+        }
+
+        [Test]
+        public void HandleCharge_CalledWithChargingNormally_MakesNoCalls()
+        {
+            //ARRANGE
+            ChargerEventArgs args = new ChargerEventArgs();
+            args.Type = ChargerEventType.ChargingNormally;
+
+            //ACT
+            uut.HandleCharge(controlSubstitute, args);
+
+            //ASSERT
+            //Assert that substitute received no calls
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HandleCharge_CalledWithFinishedCharging_MakesNoCalls()
+        {
+            //ARRANGE
+            ChargerEventArgs args = new ChargerEventArgs();
+            args.Type = ChargerEventType.FinishedCharging;
+
+            //ACT
+            uut.HandleCharge(controlSubstitute, args);
+
+            //ASSERT
+            //Assert that substitute received no calls
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HandleCharge_CalledWithNotCharging_MakesNoCalls()
+        {
+            //ARRANGE
+            ChargerEventArgs args = new ChargerEventArgs();
+            args.Type = ChargerEventType.NotCharging;
+
+            //ACT
+            uut.HandleCharge(controlSubstitute, args);
+
+            //ASSERT
+            //Assert that substitute received no calls
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HandleCharge_CalledWithNotCharging_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            ChargerEventArgs args = new ChargerEventArgs();
+            args.Type = ChargerEventType.ChargingError;
+
+            //ACT
+            uut.HandleCharge(controlSubstitute, args);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+
         }
     }
 }
