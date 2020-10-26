@@ -59,5 +59,18 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             controlSubstitute.Disp.Received().DisplayMessage("Scan RFID");
         }
+
+        [Test]
+        public void HandleRfid_Called_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //Arrange step completed in setup
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 0);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Please close the door");
+        }
     }
 }
