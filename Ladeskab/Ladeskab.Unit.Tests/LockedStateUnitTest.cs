@@ -48,5 +48,134 @@ namespace Ladeskab.Unit.Tests
             //Assert that substitute received no calls
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
         }
+
+        [Test]
+        public void HandleRfid_CalledWithMismatchingId_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12344);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("ERROR: RFID doesn't match!");
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMismatchingId_stationControlChargeControlDidNotReceiveStopCharge()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12344);
+
+            //ASSERT
+            controlSubstitute.ChargeControl.DidNotReceive().StopCharge();
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMismatchingId_stationControlDoorDidNotReceiveUnlockDoor()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12344);
+
+            //ASSERT
+            controlSubstitute.Door.DidNotReceive().UnlockDoor();
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMismatchingId_stationControlLoggerDidNotReceiveLogDoorUnlocked()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12344);
+
+            //ASSERT
+            controlSubstitute.Logger.DidNotReceiveWithAnyArgs().LogDoorUnlocked(default);
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMismatchingId_stationControlDidNotReceiveSetState()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12344);
+
+            //ASSERT
+            controlSubstitute.DidNotReceiveWithAnyArgs().SetState(default);
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMatchingId_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door unlocked, please remove phone");
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMatchingId_stationControlChargeControlReceivedStopCharge()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.ChargeControl.Received().StopCharge();
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMatchingId_stationControlDoorReceivedUnlockDoor()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.Door.Received().UnlockDoor();
+        }
+
+        [Test]
+        public void HandleRfid_CalledWithMatchingId_stationControlLoggerReceivedLogDoorUnlockedWithId()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.Logger.Received().LogDoorUnlocked(12345);
+        }
+        [Test]
+        public void HandleRfid_CalledWithMatchingId_stationControlReceivedSetStateToAvailable()
+        {
+            //ARRANGE
+            controlSubstitute.OldId = 12345;
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.Received().SetState(controlSubstitute.Available);
+        }
     }
 }
