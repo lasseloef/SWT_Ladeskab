@@ -64,7 +64,7 @@ namespace Ladeskab.Library.StationControl
 
         public void OnChargeControlChargeEvent(object sender, ChargerEventArgs e)
         {
-            State.HandleCharge(this);
+            State.HandleCharge(this, e);
         }
 
         public void OnRfidReaderRfidRead(object sender, RfidReadEventArgs e)

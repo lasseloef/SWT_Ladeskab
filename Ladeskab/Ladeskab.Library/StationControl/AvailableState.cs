@@ -1,4 +1,5 @@
 ﻿using System;
+using Ladeskab.Library.ChargeControl;
 
 namespace Ladeskab.Library.StationControl
 {
@@ -29,9 +30,9 @@ namespace Ladeskab.Library.StationControl
             }
         }
 
-        public void HandleCharge(StationControl stationControl)
+        public void HandleCharge(StationControl stationControl, ChargerEventArgs args)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
