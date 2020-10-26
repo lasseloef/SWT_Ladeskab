@@ -5,6 +5,7 @@ using System.Text;
 using Ladeskab.Library.ChargeControl;
 using Ladeskab.Library.StationControl;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 
 namespace Ladeskab.Unit.Tests
@@ -22,5 +23,56 @@ namespace Ladeskab.Unit.Tests
             uut = new AvailableState();
         }
 
+        [Test]
+        public void HandleOpenDoor_ChargeControlIsConnected_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            controlSubstitute.ChargeControl.IsConnected().Returns(true);
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Please close the door");
+        }
+
+        [Test]
+        public void HandleOpenDoor_ChargeControlIsConnected_SetsStateToDoorOpen()
+        {
+            //ARRANGE
+            controlSubstitute.ChargeControl.IsConnected().Returns(true);
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Received().SetState(controlSubstitute.DoorOpen);
+        }
+
+        [Test]
+        public void HandleOpenDoor_ChargeControlIsNotConnected_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            controlSubstitute.ChargeControl.IsConnected().Returns(false);
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Please connect a phone");
+        }
+
+        [Test]
+        public void HandleOpenDoor_ChargeControlIsNotConnected_SetsStateToDoorOpen()
+        {
+            //ARRANGE
+            controlSubstitute.ChargeControl.IsConnected().Returns(false);
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Received().SetState(controlSubstitute.DoorOpen);
+        }
     }
 }
