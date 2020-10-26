@@ -7,8 +7,7 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(IControl stationControl)
         {
-            Console.WriteLine("ERROR: Ladeskab door compromised, calling the cops, assholes!");
-            stationControl.Disp.DisplayMessage("ERROR: Ladeskab door compromised, calling the cops, assholes!");
+            stationControl.Disp.DisplayMessage("ERROR: Door is locked!");
         }
 
         public void HandleClosedDoor(IControl stationControl)
