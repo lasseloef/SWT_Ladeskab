@@ -12,7 +12,7 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleClosedDoor(IControl stationControl)
         {
-
+            //Do nothing, door is already closed
         }
 
         public void HandleRfid(IControl stationControl, int id)
