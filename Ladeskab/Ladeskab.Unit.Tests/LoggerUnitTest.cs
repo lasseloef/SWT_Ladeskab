@@ -25,13 +25,13 @@ namespace Ladeskab.Unit.Tests
         public void LoggerDoorLock_IdIsCorrect()
         {
             uut.LogDoorLocked(123);
-            Assert.That(result.ToString(), Is.EqualTo("Door locked by:123\r\n"));
+            Assert.That(result.ToString(), Is.EqualTo("LOG: Door locked by: 123\r\n"));
         }
         [Test]
         public void LoggerDoorUnLock_IdIsCorrect()
         {
             uut.LogDoorUnlocked(123);
-            Assert.That(result.ToString(), Is.EqualTo("Door unlocked by:123\r\n"));
+            Assert.That(result.ToString(), Is.EqualTo("LOG: Door unlocked by: 123\r\n"));
         }
 
     }

@@ -8,12 +8,12 @@ namespace Ladeskab.Library.Logger
     {
         public void LogDoorLocked(int id)
         {
-            Console.WriteLine("Door locked by:" + id);
+            Console.WriteLine("LOG: Door locked by: " + id);
         }
 
         public void LogDoorUnlocked(int id)
         {
-            Console.WriteLine("Door unlocked by:" + id);
+            Console.WriteLine("LOG: Door unlocked by: " + id);
         }
     }
 }
