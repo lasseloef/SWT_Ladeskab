@@ -14,7 +14,7 @@ namespace Ladeskab.Library.StationControl
         public ILadeskabState Available { get; }
         public ILadeskabState DoorOpen { get; }
         public ILadeskabState Locked { get; }
-        ILadeskabState State { get; }
+        public ILadeskabState State { get; }
         void SetState(ILadeskabState state);
         public IRfidReader RfidReader { get; }
         public IChargeControl ChargeControl { get; }

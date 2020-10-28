@@ -42,6 +42,7 @@ namespace Ladeskab.Library.StationControl
             {
                 case ChargerEventType.ChargingError:
                     stationControl.Disp.DisplayMessage("ERROR: Charger overcurrent detected! Disabling charger...");
+                    stationControl.Disp.DisplayMessage("Scan RFID to remove phone");
                     break;
 
                 case ChargerEventType.ChargingNormally:
