@@ -119,7 +119,7 @@ namespace Ladeskab.Library.StationControl
 
         public void ConnectedOnDisconnectionEvent(object sender, EventArgs e)
         {
-            Disp.DisplayMessage($"Phone is disconnected");
+            Disp.DisplayMessage("Phone is disconnected");
         }
     }
 }

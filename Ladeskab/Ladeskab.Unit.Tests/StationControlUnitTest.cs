@@ -314,6 +314,68 @@ namespace Ladeskab.Unit.Tests
         }
         #endregion
 
+        #region ConnectionEvents
+        [Test]
+        public void OnUnconnectedOnConnectionEvent_CalledThroughEvent_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+
+            //ACT
+            _chargeControlSubstitute.UnConnectedConnectionEvent += (sender, args) => _uut.UnConnectedOnConnectionEvent(new object(), args);
+
+            _chargeControlSubstitute.UnConnectedConnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            _displaySubstitute.Received().DisplayMessage("Phone is connected");
+        }
+
+        [Test]
+        public void OnUnconnectedOnDisconnectionEvent_CalledThroughEvent_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+
+            //ACT
+            _chargeControlSubstitute.UnConnectedDisconnectionEvent += (sender, args) => _uut.UnConnectedOnDisconnectionEvent(new object(), args);
+
+            _chargeControlSubstitute.UnConnectedDisconnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            _displaySubstitute.Received().DisplayMessage("A phone is not connected");
+        }
+
+        [Test]
+        public void OnConnectedOnConnectionEvent_CalledThroughEvent_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+
+            //ACT
+            _chargeControlSubstitute.ConnectedConnectionEvent += (sender, args) => _uut.ConnectedOnConnectionEvent(new object(), args);
+
+            _chargeControlSubstitute.ConnectedConnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            _displaySubstitute.Received().DisplayMessage("A phone is already connected");
+        }
+
+        [Test]
+        public void OnConnectedOnDisconnectionEvent_CalledThroughEvent_DisplaysCorrectMessage()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+
+            //ACT
+            _chargeControlSubstitute.ConnectedDisconnectionEvent += (sender, args) => _uut.ConnectedOnDisconnectionEvent(new object(), args);
+
+            _chargeControlSubstitute.ConnectedDisconnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            _displaySubstitute.Received().DisplayMessage("Phone is disconnected");
+        }
+        #endregion
+
         #region SetState
 
         [Test]
