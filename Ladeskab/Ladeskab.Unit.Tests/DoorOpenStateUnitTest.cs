@@ -24,19 +24,18 @@ namespace Ladeskab.Unit.Tests
             uut = new DoorOpenState();
         }
 
-        /*[Test]
-        public void HandleOpenDoor_Called_stationControlReceivedNoCalls()
+        [Test]
+        public void HandleOpenDoor_Called_StationControlDispDisplaysCorrectMessage()
         {
             //ARRANGE
-            //Arrange step completed in setup
+            //arrange step completed in setup
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
 
             //ASSERT
-            //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
-        }*/
+            controlSubstitute.Disp.Received().DisplayMessage("Door already open");
+        }
 
         [Test]
         public void HandleClosedDoor_Called_stationControlStateSetToAvailable()
@@ -51,18 +50,7 @@ namespace Ladeskab.Unit.Tests
             controlSubstitute.Received().SetState(controlSubstitute.Available);
         }
 
-        [Test]
-        public void HandleOpenDoor_Called_StationControlDispDisplaysCorrectMessage()
-        {
-            //ARRANGE
-            //arrange step completed in setup
-
-            //ACT
-            uut.HandleOpenDoor(controlSubstitute);
-
-            //ASSERT
-            controlSubstitute.Disp.Received().DisplayMessage("Door already open");
-        }
+        
 
         [Test]
         public void HandleClosedDoor_Called_stationControlDispDisplaysCorrectMessage()
@@ -83,15 +71,29 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //Simulate a connection
-            IPhoneState connected = Substitute.For<IPhoneState>();
-            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
-            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneConnected;
 
             //ACT
             uut.HandleClosedDoor(controlSubstitute);
 
             //ASSERT
-            controlSubstitute.Disp.Received().DisplayMessage("Door being closed");
+            controlSubstitute.Disp.Received().DisplayMessage("Scan RFID");
+        }
+
+        [Test]
+        public void HandleClosedDoor_CalledWithUnConnectedPhone_stationControlDispDoesntDisplayMessage()
+        {
+            //ARRANGE
+            //Simulate a connection
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected;
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.DidNotReceive().DisplayMessage("Scan RFID");
         }
 
         [Test]

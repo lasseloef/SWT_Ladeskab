@@ -18,15 +18,13 @@ namespace Ladeskab.Library.StationControl
             stationControl.SetState(stationControl.Available);
             if (stationControl.ChargeControl.UsbCharger.PhoneState == stationControl.ChargeControl.UsbCharger.PhoneConnected)
             {
-                stationControl.Disp.DisplayMessage("\nScan RFID");
+                stationControl.Disp.DisplayMessage("Scan RFID");
             }
         }
 
         public void HandleRfid(IControl stationControl, int id)
         {
             stationControl.Disp.DisplayMessage("RFID scanned with id:" + id);
-            //Shows the current RFID id insted of message to close door.
-            
         }
 
         public void HandleCharge(IControl stationControl, ChargerEventArgs args)
