@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Ladeskab.Library.ChargeControl;
-using Ladeskab.Library.Door;
+using Ladeskab.Library.StationControl;
 using NSubstitute;
 
 namespace Ladeskab.Unit.Tests
@@ -15,12 +15,13 @@ namespace Ladeskab.Unit.Tests
     public class TestUsbChargerSimulator
     {
         private UsbChargerSimulator _uut;
-        private IDoor Door;
+        private IControl controlSubstitute;
         [SetUp]
         public void Setup()
         {
-            Door = Substitute.For<IDoor>();
-            _uut = new UsbChargerSimulator(Door);
+            controlSubstitute = Substitute.For<IControl>();
+            _uut = new UsbChargerSimulator();
+            _uut.Controller = controlSubstitute;
         }
 
         /*
