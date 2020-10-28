@@ -64,7 +64,6 @@ namespace Ladeskab.Library.ChargeControl
         public void SimulateConnected(bool connected)
         {
             Connected = connected;
-
             OnConnection();
         }
 

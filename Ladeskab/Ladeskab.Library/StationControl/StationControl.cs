@@ -116,7 +116,7 @@ namespace Ladeskab.Library.StationControl
 
         public void OnPhoneConnectionEvent(object sender, ConnectionEventArgs e)
         {
-            if(e.Connection) 
+            if(!e.Connection) 
                 PhoneState.HandleConnectionTry(this);
             else
             { 
@@ -124,7 +124,7 @@ namespace Ladeskab.Library.StationControl
             }
         }
 
-        public void SetState(IPhoneState state)
+        public void SetPhoneState(IPhoneState state)
         {
             PhoneState = state;
         }

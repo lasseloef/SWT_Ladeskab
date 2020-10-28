@@ -5,6 +5,7 @@ using Ladeskab.Library.Door;
 using Ladeskab.Library.Logger;
 using Ladeskab.Library.RfidReader;
 using Ladeskab.Library.StationControl;
+using Ladeskab.Library.StationControl.PhoneState;
 
 namespace Ladeskab.Application
 {
@@ -41,8 +42,17 @@ namespace Ladeskab.Application
                 {
                     case ConsoleKey.P:
 
-                        connected = !connected;
-                        ((UsbChargerSimulator)sim).SimulateConnected(connected);
+                        if (stationControl.PhoneState == typeof(ConnectedPhoneState))
+                        { 
+                            connected = true;
+                            ((UsbChargerSimulator)sim).SimulateConnected(connected);
+                        }
+                        else
+                        {
+                            connected = false;
+                            ((UsbChargerSimulator)sim).SimulateConnected(connected);
+                        }
+
                         break;
 
                     case ConsoleKey.S:

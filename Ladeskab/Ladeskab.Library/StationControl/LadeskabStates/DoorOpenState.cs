@@ -18,7 +18,10 @@ namespace Ladeskab.Library.StationControl
             stationControl.SetState(stationControl.Available);
             //For Debugging
             stationControl.Disp.DisplayMessage($"\nCurrent Ladeskab state: {stationControl.State}");
-            stationControl.Disp.DisplayMessage("\nScan RFID");
+            if (stationControl.ChargeControl.IsConnected())
+            {
+                stationControl.Disp.DisplayMessage("\nScan RFID");
+            }
         }
 
         public void HandleRfid(IControl stationControl, int id)
