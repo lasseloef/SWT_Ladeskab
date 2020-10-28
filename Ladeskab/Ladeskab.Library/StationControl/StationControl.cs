@@ -72,9 +72,6 @@ namespace Ladeskab.Library.StationControl
         {
             State = Available;
 
-            //For Debugging
-            Disp.DisplayMessage($"\nCurrent Ladeskab state: {State}");
-
             Door.UnlockDoor();
             Disp.DisplayMessage("\nDoor unlocked. Open door and connect your phone");
         }
@@ -108,9 +105,6 @@ namespace Ladeskab.Library.StationControl
         public void UnConnectedOnConnectionEvent(object sender, EventArgs e)
         {
             Disp.DisplayMessage($"Phone is connected");
-
-            //Debugging
-            Disp.DisplayMessage($"\nCurrent Phone state: {ChargeControl.UsbCharger.PhoneState}");
         }
 
         public void UnConnectedOnDisconnectionEvent(object sender, EventArgs e)
@@ -126,10 +120,6 @@ namespace Ladeskab.Library.StationControl
         public void ConnectedOnDisconnectionEvent(object sender, EventArgs e)
         {
             Disp.DisplayMessage($"Phone is disconnected");
-
-            //Debugging
-            Disp.DisplayMessage($"\nCurrent Phone state: {ChargeControl.UsbCharger.PhoneState}");
-
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Ladeskab.Library.ChargeControl
 
         public void SimulateConnected(bool connected)
         {
-            if (!connected)
+            if (connected)
             {
                 PhoneState.HandleConnectionTry(this);
             }
