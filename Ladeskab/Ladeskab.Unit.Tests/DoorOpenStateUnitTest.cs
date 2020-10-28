@@ -6,6 +6,7 @@ using Ladeskab.Library.ChargeControl;
 using Ladeskab.Library.StationControl;
 using NSubstitute;
 using NUnit.Framework;
+using NUnit.Framework.Api;
 
 namespace Ladeskab.Unit.Tests
 {
@@ -72,6 +73,7 @@ namespace Ladeskab.Unit.Tests
             uut.HandleClosedDoor(controlSubstitute);
 
             //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door being closed");
             controlSubstitute.Disp.Received().DisplayMessage("Scan RFID");
         }
 
@@ -82,10 +84,10 @@ namespace Ladeskab.Unit.Tests
             //Arrange step completed in setup
 
             //ACT
-            uut.HandleRfid(controlSubstitute, 0);
+            uut.HandleRfid(controlSubstitute, 123);
 
             //ASSERT
-            controlSubstitute.Disp.Received().DisplayMessage("Please close the door");
+            controlSubstitute.Disp.Received().DisplayMessage("RFID scanned with id:" + 123);
         }
 
         [Test]
