@@ -8,7 +8,6 @@ namespace Ladeskab.Library.ChargeControl
         void StartCharge();
         void StopCharge();
         event EventHandler<ChargerEventArgs> ChargeEvent;
-        event EventHandler<ConnectionEventArgs> ConnectionEvent;
     }
 
     public class ChargerEventArgs : EventArgs

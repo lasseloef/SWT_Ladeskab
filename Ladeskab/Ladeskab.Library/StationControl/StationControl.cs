@@ -11,13 +11,10 @@ namespace Ladeskab.Library.StationControl
     public class StationControl : IControl
     {
         public ILadeskabState State { get; private set; }
-        public IPhoneState PhoneState { get; private set; }
         //evt public getter private setter
         public ILadeskabState Available { get; private set; }
         public ILadeskabState DoorOpen { get; private set; }
         public ILadeskabState Locked { get; private set; }
-        public IPhoneState PhoneConnected { get; private set; }
-        public IPhoneState PhoneUnConnected { get; private set; }
         public IRfidReader RfidReader { get; private set; }
         public IChargeControl ChargeControl { get; private set; }
         public ILogger Logger { get; private set; }
@@ -39,9 +36,6 @@ namespace Ladeskab.Library.StationControl
             DoorOpen = new DoorOpenState();
             Locked = new LockedState();
 
-            //Phone States
-            PhoneConnected = new ConnectedPhoneState();
-            PhoneUnConnected = new UnConnectedPhoneState();
 
             //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
@@ -54,7 +48,7 @@ namespace Ladeskab.Library.StationControl
         }
 
         public StationControl(ILogger logger, IDisplay display, IDoor door, ILadeskabState available, ILadeskabState doorOpen,
-            ILadeskabState locked, IRfidReader rfid, IChargeControl chargeCtrl, IPhoneState connected, IPhoneState unConnected)
+            ILadeskabState locked, IRfidReader rfid, IChargeControl chargeCtrl)
         {
             //Modules
             Logger = logger;
@@ -68,9 +62,6 @@ namespace Ladeskab.Library.StationControl
             DoorOpen = doorOpen;
             Locked = locked;
 
-            //Phone States
-            PhoneConnected = connected;
-            PhoneUnConnected = unConnected;
 
             OldId = 0;
         }
@@ -78,11 +69,9 @@ namespace Ladeskab.Library.StationControl
         public void Start()
         {
             State = Available;
-            PhoneState = PhoneUnConnected;
 
             //For Debugging
             Disp.DisplayMessage($"\nCurrent Ladeskab state: {State}");
-            Disp.DisplayMessage($"\nCurrent Phone state: {PhoneState}");
 
             Door.UnlockDoor();
             Disp.DisplayMessage("\nDoor unlocked. Open door and connect your phone");
@@ -122,11 +111,6 @@ namespace Ladeskab.Library.StationControl
             { 
                 PhoneState.HandleDisconnectionTry(this);
             }
-        }
-
-        public void SetPhoneState(IPhoneState state)
-        {
-            PhoneState = state;
         }
     }
 }

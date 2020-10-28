@@ -5,7 +5,6 @@ using Ladeskab.Library.Door;
 using Ladeskab.Library.Logger;
 using Ladeskab.Library.RfidReader;
 using Ladeskab.Library.StationControl;
-using Ladeskab.Library.StationControl.PhoneState;
 
 namespace Ladeskab.Application
 {
@@ -14,12 +13,12 @@ namespace Ladeskab.Application
         static void Main(string[] args)
         {
             //Classes that need to be influenced outside stationControl
-            IUsbCharger sim = new UsbChargerSimulator();
+            IDoor door = new Door();
+            IRfidReader rfidReader = new RfidReader();
+
+            IUsbCharger sim = new UsbChargerSimulator(door);
             IChargeControl chargeControl = new ChargeControl(sim);
 
-            IDoor door = new Door();
-
-            IRfidReader rfidReader = new RfidReader();
 
             //Classes only used inside stationControl just declared in ctor args
             StationControl stationControl = new StationControl(new Logger(), new Display(), door, rfidReader, chargeControl);

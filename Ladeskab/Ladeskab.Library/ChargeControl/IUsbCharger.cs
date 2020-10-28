@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Dynamic;
+using Ladeskab.Library.Door;
 
 namespace Ladeskab.Library.ChargeControl
 {
@@ -8,26 +10,23 @@ namespace Ladeskab.Library.ChargeControl
         public double Current { set; get; }
     }
 
-    public class ConnectionEventArgs : EventArgs
-    {
-        public bool Connection { set; get; }
-    }
-
     public interface IUsbCharger
     {
         // Event triggered on new current value
         event EventHandler<CurrentEventArgs> CurrentValueEvent;
-        event EventHandler<ConnectionEventArgs> ConnectedEvent;
+        public IPhoneState PhoneState { get; }
+        public IPhoneState PhoneConnected { get; }
+        public IPhoneState PhoneUnConnected { get; }
+        public IDoor Door { get; }
 
         // Direct access to the current current value
         double CurrentValue { get; }
-
-        // Require connection status of the phone
-        bool Connected { get; }
 
         // Start charging
         void StartCharge();
         // Stop charging
         void StopCharge();
+
+        void SetPhoneState(IPhoneState state);
     }
 }

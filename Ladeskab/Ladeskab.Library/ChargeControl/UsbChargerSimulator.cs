@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Timers;
+using Ladeskab.Library.Door;
 
 namespace Ladeskab.Library.ChargeControl
 {
     public class UsbChargerSimulator : IUsbCharger
     {
+        public IPhoneState PhoneState { get; private set; }
+        public IPhoneState PhoneConnected { get; private set; }
+        public IPhoneState PhoneUnConnected { get; private set; }
+        public IDoor Door { get; private set; }
+
         // Constants
         private const double MaxCurrent = 500.0; // mA
         private const double FullyChargedCurrent = 2.5; // mA
@@ -13,27 +19,45 @@ namespace Ladeskab.Library.ChargeControl
         private const int CurrentTickInterval = 250; // ms
 
         public event EventHandler<CurrentEventArgs> CurrentValueEvent;
-        public event EventHandler<ConnectionEventArgs> ConnectedEvent;
 
         public double CurrentValue { get; private set; }
 
-        public bool Connected { get; private set; }
 
         private bool _overload;
         private bool _charging;
         private System.Timers.Timer _timer;
         private int _ticksSinceStart;
 
-        public UsbChargerSimulator()
+        public UsbChargerSimulator(IDoor door)
         {
             CurrentValue = 0.0;
-            Connected = false;
             _overload = false;
 
             _timer = new System.Timers.Timer();
             _timer.Enabled = false;
             _timer.Interval = CurrentTickInterval;
             _timer.Elapsed += TimerOnElapsed;
+
+            Door = door;
+
+            //Phone States
+            PhoneConnected = new ConnectedPhoneState();
+            PhoneUnConnected = new UnConnectedPhoneState();
+        }
+
+        public UsbChargerSimulator(IPhoneState connected, IPhoneState unConnected, IDoor door)
+        {
+            CurrentValue = 0.0;
+            _overload = false;
+
+            _timer = new System.Timers.Timer();
+            _timer.Enabled = false;
+            _timer.Interval = CurrentTickInterval;
+            _timer.Elapsed += TimerOnElapsed;
+
+            //Phone States
+            PhoneConnected = connected;
+            PhoneUnConnected = unConnected;
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
@@ -42,17 +66,17 @@ namespace Ladeskab.Library.ChargeControl
             if (_charging)
             {
                 _ticksSinceStart++;
-                if (Connected && !_overload)
+                if (PhoneState == PhoneConnected && !_overload)
                 {
                     double newValue = MaxCurrent - 
                                       _ticksSinceStart * (MaxCurrent - FullyChargedCurrent) / (ChargeTimeMinutes * 60 * 1000 / CurrentTickInterval);
                     CurrentValue = Math.Max(newValue, FullyChargedCurrent);
                 }
-                else if (Connected && _overload)
+                else if (PhoneState == PhoneConnected && _overload)
                 {
                     CurrentValue = OverloadCurrent;
                 }
-                else if (!Connected)
+                else if (PhoneState == PhoneUnConnected)
                 {
                     CurrentValue = 0.0;
                 }
@@ -63,8 +87,12 @@ namespace Ladeskab.Library.ChargeControl
 
         public void SimulateConnected(bool connected)
         {
-            Connected = connected;
-            OnConnection();
+            if(connected)
+                SetPhoneState(PhoneConnected);
+            else
+            {
+                SetPhoneState(PhoneUnConnected);
+            }   
         }
 
         public void SimulateOverload(bool overload)
@@ -77,15 +105,15 @@ namespace Ladeskab.Library.ChargeControl
             // Ignore if already charging
             if (!_charging)
             {
-                if (Connected && !_overload)
+                if (PhoneState == PhoneConnected && !_overload)
                 {
                     CurrentValue = 500;
                 }
-                else if (Connected && _overload)
+                else if (PhoneState == PhoneConnected && _overload)
                 {
                     CurrentValue = OverloadCurrent;
                 }
-                else if (!Connected)
+                else if (PhoneState == PhoneUnConnected)
                 {
                     CurrentValue = 0.0;
                 }
@@ -114,9 +142,9 @@ namespace Ladeskab.Library.ChargeControl
             CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
         }
 
-        private void OnConnection()
+        public void SetPhoneState(IPhoneState state)
         {
-            ConnectedEvent?.Invoke(this, new ConnectionEventArgs() {Connection = this.Connected});
+            PhoneState = state;
         }
     }
 }

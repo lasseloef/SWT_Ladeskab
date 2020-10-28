@@ -12,7 +12,6 @@ namespace Ladeskab.Library.ChargeControl
         {
             UsbCharger = usbCharger;
             UsbCharger.CurrentValueEvent += OnUsbChargerCurrentValueEvent;
-            UsbCharger.ConnectedEvent += OnConnectedEvent;
         }
 
         private void OnUsbChargerCurrentValueEvent(object sender, CurrentEventArgs args)
@@ -62,10 +61,6 @@ namespace Ladeskab.Library.ChargeControl
             return UsbCharger.Connected;
         }
 
-        private void OnConnectedEvent(object sender, ConnectionEventArgs args)
-        {
-            ConnectionEvent?.Invoke(this, args);
-        }
 
         public void StartCharge()
         {
@@ -78,6 +73,5 @@ namespace Ladeskab.Library.ChargeControl
         }
 
         public event EventHandler<ChargerEventArgs> ChargeEvent;
-        public event EventHandler<ConnectionEventArgs> ConnectionEvent;
     }
 }
