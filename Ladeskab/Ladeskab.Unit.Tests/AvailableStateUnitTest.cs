@@ -68,7 +68,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsNotConnected_DisplaysCorrectMessage()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -81,7 +83,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsNotConnected_SetsStateToDoorOpen()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -122,7 +126,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_DisplaysCorrectMessage()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -135,7 +141,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_IdIsNotSaved()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -148,7 +156,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_DoorIsNotLocked()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -161,7 +171,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_DoesntStartCharging()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -174,7 +186,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_LoggerNotCalled()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -187,7 +201,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithDisconnectedPhone_SetStateNotCalled()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(false);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -200,8 +216,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithConnectedPhone_IdIsSaved()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -214,8 +231,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithConnectedPhone_DoorIsLocked()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -228,8 +246,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithConnectedPhone_StartsCharging()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -242,8 +261,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithConnectedPhone_LoggerLogdoorLockedCalledWithID()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -256,8 +276,9 @@ namespace Ladeskab.Unit.Tests
         public void HandleRfid_CalledWithConnectedPhone_SetStateToLocked()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);

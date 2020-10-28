@@ -5,6 +5,7 @@ using System.Text;
 using Ladeskab.Library.ChargeControl;
 using Ladeskab.Library.StationControl;
 using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 using NUnit.Framework.Api;
 
@@ -74,7 +75,23 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             controlSubstitute.Disp.Received().DisplayMessage("Door being closed");
-            controlSubstitute.Disp.Received().DisplayMessage("Scan RFID");
+            controlSubstitute.Disp.Received().DisplayMessage("Door is closed");
+        }
+
+        [Test]
+        public void HandleClosedDoor_CalledWithConnectedPhone_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //Simulate a connection
+            IPhoneState connected = Substitute.For<IPhoneState>();
+            controlSubstitute.ChargeControl.UsbCharger.PhoneConnected.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door being closed");
         }
 
         [Test]
