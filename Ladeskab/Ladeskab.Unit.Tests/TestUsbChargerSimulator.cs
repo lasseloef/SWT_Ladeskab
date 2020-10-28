@@ -16,21 +16,25 @@ namespace Ladeskab.Unit.Tests
     {
         private UsbChargerSimulator _uut;
         private IControl controlSubstitute;
+        private IPhoneState connectedState;
+        private IPhoneState unconnectedState;
         [SetUp]
         public void Setup()
         {
             controlSubstitute = Substitute.For<IControl>();
-            _uut = new UsbChargerSimulator();
+            connectedState = Substitute.For<IPhoneState>();
+            unconnectedState = Substitute.For<IPhoneState>();
+            _uut = new UsbChargerSimulator(connectedState, unconnectedState, controlSubstitute);
             _uut.Controller = controlSubstitute;
         }
 
-        /*
+        
         [Test]
         public void ctor_IsConnected()
         {
-            Assert.That(_uut.Connected, Is.True);
+            Assert.That(_uut.PhoneState, Is.EqualTo(_uut.PhoneUnConnected));
         }
-        */
+        
 
         [Test]
         public void ctor_CurentValueIsZero()
@@ -38,15 +42,20 @@ namespace Ladeskab.Unit.Tests
             Assert.That(_uut.CurrentValue, Is.Zero);
         }
 
-        /*
+        
         [Test]
-        public void SimulateDisconnected_ReturnsDisconnected()
+        public void SimulateDisconnected_CallsStateHandleDisconnectionTry()
         {
             _uut.SimulateConnected(false);
-            Assert.That(_uut.Connected, Is.False);
+            _uut.PhoneState.Received().HandleDisconnectionTry(_uut);
         }
-        */
 
+        [Test]
+        public void SimulateConnected_ReturnsConnected()
+        {
+            _uut.SimulateConnected(true);
+            _uut.PhoneState.Received().HandleConnectionTry(_uut);
+        }
         [Test]
         public void Started_WaitSomeTime_ReceivedSeveralValues()
         {
