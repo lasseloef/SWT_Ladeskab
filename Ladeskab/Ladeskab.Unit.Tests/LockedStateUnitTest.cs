@@ -49,20 +49,6 @@ namespace Ladeskab.Unit.Tests
             controlSubstitute.Disp.Received().DisplayMessage("Door is already locked");
         }
 
-        /*[Test]
-        public void HandleClosedDoor_Called_stationControlReceivedNoCalls()
-        {
-            //ARRANGE
-            //Arrange step completed in setup
-
-            //ACT
-            uut.HandleClosedDoor(controlSubstitute);
-
-            //ASSERT
-            //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
-        }*/
-
         [Test]
         public void HandleRfid_CalledAnyId_stationControlDispDisplaysCorrectMessage()
         {
