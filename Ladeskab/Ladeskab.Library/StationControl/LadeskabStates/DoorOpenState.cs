@@ -14,7 +14,6 @@ namespace Ladeskab.Library.StationControl
         public void HandleClosedDoor(IControl stationControl)
         {
             stationControl.Disp.DisplayMessage("Door being closed");
-            System.Threading.Thread.Sleep(1000);
             stationControl.Disp.DisplayMessage("Door is closed");
             stationControl.SetState(stationControl.Available);
             if (stationControl.ChargeControl.UsbCharger.PhoneState == stationControl.ChargeControl.UsbCharger.PhoneConnected)
