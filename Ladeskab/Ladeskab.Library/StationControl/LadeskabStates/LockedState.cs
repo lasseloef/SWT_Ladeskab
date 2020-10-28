@@ -31,7 +31,7 @@ namespace Ladeskab.Library.StationControl
                 stationControl.Disp.DisplayMessage("Door unlocked, please remove phone");
                 stationControl.SetState(stationControl.Available);
                 //For Debugging
-                stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
+                stationControl.Disp.DisplayMessage($"\nCurrent Ladeskab state: {stationControl.State}");
             }
         }
 

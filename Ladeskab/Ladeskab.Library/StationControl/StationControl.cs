@@ -16,6 +16,8 @@ namespace Ladeskab.Library.StationControl
         public ILadeskabState Available { get; private set; }
         public ILadeskabState DoorOpen { get; private set; }
         public ILadeskabState Locked { get; private set; }
+        public IPhoneState PhoneConnected { get; private set; }
+        public IPhoneState PhoneUnConnected { get; private set; }
         public IRfidReader RfidReader { get; private set; }
         public IChargeControl ChargeControl { get; private set; }
         public ILogger Logger { get; private set; }
@@ -32,14 +34,18 @@ namespace Ladeskab.Library.StationControl
             RfidReader = rfid;
             ChargeControl = chargeCtrl;
 
-            //States
+            //Ladeskab States
             Available = new AvailableState();
             DoorOpen = new DoorOpenState();
             Locked = new LockedState();
 
+            //Phone States
+            PhoneConnected = new ConnectedPhoneState();
+            PhoneUnConnected = new UnConnectedPhoneState();
+
             //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
-            ChargeControl.ConnectionEvent += OnPhoneConnected;
+            ChargeControl.ConnectionEvent += OnPhoneConnectionEvent;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;
@@ -48,7 +54,7 @@ namespace Ladeskab.Library.StationControl
         }
 
         public StationControl(ILogger logger, IDisplay display, IDoor door, ILadeskabState available, ILadeskabState doorOpen,
-            ILadeskabState locked, IRfidReader rfid, IChargeControl chargeCtrl)
+            ILadeskabState locked, IRfidReader rfid, IChargeControl chargeCtrl, IPhoneState connected, IPhoneState unConnected)
         {
             //Modules
             Logger = logger;
@@ -57,10 +63,14 @@ namespace Ladeskab.Library.StationControl
             RfidReader = rfid;
             ChargeControl = chargeCtrl;
 
-            //States
+            //Ladeskab States
             Available = available;
             DoorOpen = doorOpen;
             Locked = locked;
+
+            //Phone States
+            PhoneConnected = connected;
+            PhoneUnConnected = unConnected;
 
             OldId = 0;
         }
@@ -68,9 +78,11 @@ namespace Ladeskab.Library.StationControl
         public void Start()
         {
             State = Available;
+            PhoneState = PhoneUnConnected;
 
             //For Debugging
-            Disp.DisplayMessage($"\nCurrent state: {State}");
+            Disp.DisplayMessage($"\nCurrent Ladeskab state: {State}");
+            Disp.DisplayMessage($"\nCurrent Phone state: {PhoneState}");
 
             Door.UnlockDoor();
             Disp.DisplayMessage("\nDoor unlocked. Open door and connect your phone");
@@ -102,7 +114,7 @@ namespace Ladeskab.Library.StationControl
             State = state;
         }
 
-        public void OnPhoneConnected(object sender, ConnectionEventArgs e)
+        public void OnPhoneConnectionEvent(object sender, ConnectionEventArgs e)
         {
             if(e.Connection) 
                 PhoneState.HandleConnectionTry(this);

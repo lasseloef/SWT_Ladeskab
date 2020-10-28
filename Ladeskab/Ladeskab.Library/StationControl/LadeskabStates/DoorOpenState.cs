@@ -17,7 +17,7 @@ namespace Ladeskab.Library.StationControl
             System.Threading.Thread.Sleep(1000);
             stationControl.SetState(stationControl.Available);
             //For Debugging
-            stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
+            stationControl.Disp.DisplayMessage($"\nCurrent Ladeskab state: {stationControl.State}");
             stationControl.Disp.DisplayMessage("\nScan RFID");
         }
 
