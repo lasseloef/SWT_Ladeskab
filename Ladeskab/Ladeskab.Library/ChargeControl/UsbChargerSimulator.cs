@@ -145,11 +145,5 @@ namespace Ladeskab.Library.ChargeControl
         {
             CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
         }
-
-
-        public void SetPhoneState(IPhoneState state)
-        {
-            PhoneState = state;
-        }
     }
 }
