@@ -39,8 +39,6 @@ namespace Ladeskab.Library.ChargeControl
             _timer.Interval = CurrentTickInterval;
             _timer.Elapsed += TimerOnElapsed;
 
-            //Must know about the controller, since a phone shouldn't be able to be connected or disconnected when door is closed.
-
             //Phone States
             PhoneConnected = new ConnectedPhoneState();
             PhoneUnConnected = new UnConnectedPhoneState();

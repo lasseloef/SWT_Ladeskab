@@ -32,6 +32,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void ctor_IsConnected()
         {
+            _uut = new UsbChargerSimulator();
             Assert.That(_uut.PhoneState, Is.EqualTo(_uut.PhoneUnConnected));
         }
         
@@ -39,9 +40,17 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void ctor_CurentValueIsZero()
         {
+            _uut = new UsbChargerSimulator();
             Assert.That(_uut.CurrentValue, Is.Zero);
         }
 
+        [Test]
+        public void setAndGetController_Called_ControllerIsSetAndGet()
+        {
+            _uut.Controller = controlSubstitute;
+
+            Assert.That(_uut.Controller, Is.EqualTo(controlSubstitute));
+        }
         
         [Test]
         public void SimulateDisconnected_CallsStateHandleDisconnectionTry()
@@ -59,6 +68,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void Started_WaitSomeTime_ReceivedSeveralValues()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             int numValues = 0;
             _uut.CurrentValueEvent += (o, args) => numValues++;
 
@@ -72,6 +82,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void Started_WaitSomeTime_ReceivedChangedValue()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             double lastValue = 1000;
             _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
@@ -85,6 +96,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void StartedNoEventReceiver_WaitSomeTime_PropertyChangedValue()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             _uut.StartCharge();
 
             System.Threading.Thread.Sleep(300);
@@ -95,6 +107,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void Started_WaitSomeTime_PropertyMatchesReceivedValue()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             double lastValue = 1000;
             _uut.CurrentValueEvent += (o, args) => lastValue = args.Current;
 
