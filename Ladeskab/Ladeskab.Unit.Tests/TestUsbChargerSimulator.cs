@@ -100,6 +100,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void Started_SimulateOverload_ReceivesHighValue()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             ManualResetEvent pause = new ManualResetEvent(false);
             double lastValue = 0;
 
@@ -155,6 +156,7 @@ namespace Ladeskab.Unit.Tests
         [Test]
         public void SimulateOverload_Start_ReceivesHighValueImmediately()
         {
+            _uut.PhoneState = _uut.PhoneConnected;
             double lastValue = 0;
 
             _uut.CurrentValueEvent += (o, args) =>
