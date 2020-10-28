@@ -13,11 +13,15 @@ namespace Ladeskab.Library.StationControl
             {
                 stationControl.Disp.DisplayMessage("Please connect a phone");
                 stationControl.SetState(stationControl.DoorOpen);
+                //For Debugging
+                stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
             }
             else
             {
                 stationControl.Disp.DisplayMessage("Please close the door");
                 stationControl.SetState(stationControl.DoorOpen);
+                //For Debugging
+                stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
             }
         }
 
@@ -41,6 +45,8 @@ namespace Ladeskab.Library.StationControl
                 stationControl.Logger.LogDoorLocked(id);
                 stationControl.ChargeControl.StartCharge();
                 stationControl.SetState(stationControl.Locked);
+                //For Debugging
+                stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
             }
         }
 

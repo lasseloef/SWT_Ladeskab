@@ -4,12 +4,14 @@ using Ladeskab.Library.Display;
 using Ladeskab.Library.Door;
 using Ladeskab.Library.Logger;
 using Ladeskab.Library.RfidReader;
+using Ladeskab.Library.StationControl.PhoneState;
 
 namespace Ladeskab.Library.StationControl
 {
     public class StationControl : IControl
     {
         public ILadeskabState State { get; private set; }
+        public IPhoneState PhoneState { get; private set; }
         //evt public getter private setter
         public ILadeskabState Available { get; private set; }
         public ILadeskabState DoorOpen { get; private set; }
@@ -37,6 +39,7 @@ namespace Ladeskab.Library.StationControl
 
             //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
+            ChargeControl.ConnectionEvent += OnPhoneConnected;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;
@@ -64,9 +67,11 @@ namespace Ladeskab.Library.StationControl
 
         public void Start()
         {
-            //Sæt evt. i constructor
             State = Available;
+
+            //For Debugging
             Disp.DisplayMessage($"\nCurrent state: {State}");
+
             Door.UnlockDoor();
             Disp.DisplayMessage("\nDoor unlocked. Open door and connect your phone");
         }
@@ -95,6 +100,21 @@ namespace Ladeskab.Library.StationControl
         public void SetState(ILadeskabState state)
         {
             State = state;
+        }
+
+        public void OnPhoneConnected(object sender, ConnectionEventArgs e)
+        {
+            if(e.Connection) 
+                PhoneState.HandleConnectionTry(this);
+            else
+            { 
+                PhoneState.HandleDisconnectionTry(this);
+            }
+        }
+
+        public void SetState(IPhoneState state)
+        {
+            PhoneState = state;
         }
     }
 }

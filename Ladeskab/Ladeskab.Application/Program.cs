@@ -40,6 +40,7 @@ namespace Ladeskab.Application
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.P:
+
                         connected = !connected;
                         ((UsbChargerSimulator)sim).SimulateConnected(connected);
                         break;

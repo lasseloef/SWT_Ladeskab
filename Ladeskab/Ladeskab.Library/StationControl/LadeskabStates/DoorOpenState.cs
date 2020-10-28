@@ -16,7 +16,9 @@ namespace Ladeskab.Library.StationControl
             stationControl.Disp.DisplayMessage("Door being closed");
             System.Threading.Thread.Sleep(1000);
             stationControl.SetState(stationControl.Available);
-            stationControl.Disp.DisplayMessage("Scan RFID");
+            //For Debugging
+            stationControl.Disp.DisplayMessage($"\nCurrent state: {stationControl.State}");
+            stationControl.Disp.DisplayMessage("\nScan RFID");
         }
 
         public void HandleRfid(IControl stationControl, int id)

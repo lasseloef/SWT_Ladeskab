@@ -13,6 +13,7 @@ namespace Ladeskab.Library.ChargeControl
         private const int CurrentTickInterval = 250; // ms
 
         public event EventHandler<CurrentEventArgs> CurrentValueEvent;
+        public event EventHandler<ConnectionEventArgs> ConnectedEvent;
 
         public double CurrentValue { get; private set; }
 
@@ -63,6 +64,8 @@ namespace Ladeskab.Library.ChargeControl
         public void SimulateConnected(bool connected)
         {
             Connected = connected;
+
+            OnConnection();
         }
 
         public void SimulateOverload(bool overload)
@@ -110,6 +113,11 @@ namespace Ladeskab.Library.ChargeControl
         private void OnNewCurrent()
         {
             CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
+        }
+
+        private void OnConnection()
+        {
+            ConnectedEvent?.Invoke(this, new ConnectionEventArgs() {Connection = this.Connected});
         }
     }
 }

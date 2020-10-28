@@ -8,10 +8,16 @@ namespace Ladeskab.Library.ChargeControl
         public double Current { set; get; }
     }
 
+    public class ConnectionEventArgs : EventArgs
+    {
+        public bool Connection { set; get; }
+    }
+
     public interface IUsbCharger
     {
         // Event triggered on new current value
         event EventHandler<CurrentEventArgs> CurrentValueEvent;
+        event EventHandler<ConnectionEventArgs> ConnectedEvent;
 
         // Direct access to the current current value
         double CurrentValue { get; }
