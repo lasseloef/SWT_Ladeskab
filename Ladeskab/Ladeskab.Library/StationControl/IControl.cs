@@ -11,10 +11,10 @@ namespace Ladeskab.Library.StationControl
 {
     public interface IControl
     {
-        public ILadeskabState Available { get; }
-        public ILadeskabState DoorOpen { get; }
-        public ILadeskabState Locked { get; }
-        public ILadeskabState State { get; }
+        public ILadeskabState Available { get; set; }
+        public ILadeskabState DoorOpen { get; set; }
+        public ILadeskabState Locked { get; set; }
+        public ILadeskabState State { get; set; }
         void SetState(ILadeskabState state);
         public IRfidReader RfidReader { get; }
         public IChargeControl ChargeControl { get; }
