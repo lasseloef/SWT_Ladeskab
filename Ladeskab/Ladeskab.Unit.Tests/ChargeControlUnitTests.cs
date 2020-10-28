@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Ladeskab.Library.ChargeControl;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.DataCollection;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -95,6 +96,79 @@ namespace Ladeskab.Unit.Tests
             UsbChargerSubstitute.Received().StopCharge();
         }
 
+        #endregion
+
+        #region ConnectionEvents
+        [Test]
+        public void OnUnconnectedOnConnectionEvent_CalledThroughEvent_RaisesEvent()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+            UsbChargerSubstitute.PhoneUnConnected.ConnectionEvent += (sender, args) => uut.UnConnectedOnConnectionEvent(new object(), args);
+
+            bool eventRaised = false;
+            uut.UnConnectedConnectionEvent += (o, e) => eventRaised = true;
+
+            //ACT
+
+            UsbChargerSubstitute.PhoneUnConnected.ConnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(eventRaised, Is.True);
+        }
+        
+        [Test]
+        public void OnUnconnectedOnDisconnectionEvent_CalledThroughEvent_RaisesEvent()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+            UsbChargerSubstitute.PhoneUnConnected.DisconnectionEvent += (sender, args) => uut.UnConnectedOnDisconnectionEvent(new object(), args);
+
+            bool eventRaised = false;
+            uut.UnConnectedDisconnectionEvent += (o, e) => eventRaised = true;
+
+            //ACT
+
+            UsbChargerSubstitute.PhoneUnConnected.DisconnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(eventRaised, Is.True);
+        }
+        
+        [Test]
+        public void OnConnectedOnConnectionEvent_CalledThroughEvent_RaisesEvent()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+            UsbChargerSubstitute.PhoneConnected.ConnectionEvent += (sender, args) => uut.ConnectedOnConnectionEvent(new object(), args);
+
+            bool eventRaised = false;
+            uut.ConnectedConnectionEvent += (o, e) => eventRaised = true;
+
+            //ACT
+            UsbChargerSubstitute.PhoneConnected.ConnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(eventRaised, Is.True);
+        }
+        
+        [Test]
+        public void OnConnectedOnDisconnectionEvent_CalledThroughEvent_RaisesEvent()
+        {
+            //ARRANGE
+            EventArgs args = new EventArgs();
+            UsbChargerSubstitute.PhoneConnected.DisconnectionEvent += (sender, args) => uut.ConnectedOnDisconnectionEvent(new object(), args);
+
+            bool eventRaised = false;
+            uut.ConnectedDisconnectionEvent += (o, e) => eventRaised = true;
+
+            //ACT
+            UsbChargerSubstitute.PhoneConnected.DisconnectionEvent += Raise.EventWith(new object(), args);
+
+            //ASSERT
+            Assert.That(eventRaised, Is.True);
+        }
+        
         #endregion
 
         #region OnUsbChargerCurrentValueEvent
