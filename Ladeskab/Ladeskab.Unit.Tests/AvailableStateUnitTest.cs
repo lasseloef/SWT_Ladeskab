@@ -93,8 +93,7 @@ namespace Ladeskab.Unit.Tests
         }
         
 
-        //HandleClosedDoor now does something since it prints out. consider removing this test case.
-        /*[Test]
+        [Test]
         public void HandleClosedDoor_Called_DoesNothing()
         {
             //ARRANGE
@@ -105,8 +104,8 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
-        }*/
+            controlSubstitute.Disp.Received().DisplayMessage("Door is already closed");
+        }
 
         [Test]
         public void HandleRfid_Irrelevant_DisplayCorrectIDInMessage()
