@@ -40,8 +40,8 @@ namespace Ladeskab.Library.StationControl
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
             ChargeControl.UnConnectedConnectionEvent += UnConnectedOnConnectionEvent;
             ChargeControl.UnConnectedDisconnectionEvent += UnConnectedOnDisconnectionEvent;
-            ChargeControl.UnConnectedConnectionEvent += ConnectedOnConnectionEvent;
-            ChargeControl.UnConnectedDisconnectionEvent += ConnectedOnDisconnectionEvent;
+            ChargeControl.ConnectedConnectionEvent += ConnectedOnConnectionEvent;
+            ChargeControl.ConnectedDisconnectionEvent += ConnectedOnDisconnectionEvent;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;

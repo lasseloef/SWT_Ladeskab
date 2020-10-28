@@ -8,8 +8,14 @@ namespace Ladeskab.Library.ChargeControl
         public event EventHandler<EventArgs> DisconnectionEvent;
         public void HandleConnectionTry(IUsbCharger usbCharger)
         {
-            //Send notice to StationControl, so it can display info
-            OnDisconnection();
+            if (usbCharger.Door.Locked)
+            {
+            }
+            else
+            {
+                //Send notice to StationControl, so it can display info
+                OnConnection();
+            }
         }
 
         public void HandleDisconnectionTry(IUsbCharger usbCharger)
@@ -19,7 +25,7 @@ namespace Ladeskab.Library.ChargeControl
                 usbCharger.SetPhoneState(usbCharger.PhoneUnConnected);
 
                 //Send notice to StationControl, so it can display info
-                OnConnection();
+                OnDisconnection();
             }
             else
             {
