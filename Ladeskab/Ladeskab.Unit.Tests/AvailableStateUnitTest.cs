@@ -21,7 +21,6 @@ namespace Ladeskab.Unit.Tests
         {
             controlSubstitute = Substitute.For<IControl>();
             uut = new AvailableState();
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected);
         }
         [Test]
         public void HandleOpenDoor_ChargeControlIrrelevant_DisplayCorrectStartMessage()
@@ -94,7 +93,7 @@ namespace Ladeskab.Unit.Tests
         
 
         [Test]
-        public void HandleClosedDoor_Called_DoesNothing()
+        public void HandleClosedDoor_Called_DisplaysCorrectMessage()
         {
             //ARRANGE
             //Arrange step completed in setup
