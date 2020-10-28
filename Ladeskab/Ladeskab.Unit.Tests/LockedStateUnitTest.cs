@@ -37,6 +37,19 @@ namespace Ladeskab.Unit.Tests
         }
 
         [Test]
+        public void HandleClosedDoor_Called_stationCntrolDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //step completed in setup
+
+            //ACT
+            uut.HandleClosedDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door is already locked");
+        }
+
+        [Test]
         public void HandleClosedDoor_Called_stationControlReceivedNoCalls()
         {
             //ARRANGE
@@ -48,6 +61,19 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             //Assert that substitute received no calls
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HandleRfid_CalledAnyId_stationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //Step completed in setup
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("RFID scanned with id:" + 12345);
         }
 
         [Test]

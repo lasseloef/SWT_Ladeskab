@@ -12,11 +12,13 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleClosedDoor(IControl stationControl)
         {
+            stationControl.Disp.DisplayMessage("Door is already locked");
             //Do nothing, door is already closed
         }
 
         public void HandleRfid(IControl stationControl, int id)
         {
+            stationControl.Disp.DisplayMessage("RFID scanned with id:" + id);
             if (id != stationControl.OldId)
             {
                 stationControl.Disp.DisplayMessage("ERROR: RFID doesn't match!");
