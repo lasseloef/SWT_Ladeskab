@@ -40,8 +40,8 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsConnected_DisplaysCorrectMessage()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneConnected;
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -54,8 +54,8 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsConnected_SetsStateToDoorOpen()
         {
             //ARRANGE
-            //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneConnected;
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -68,9 +68,8 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsNotConnected_DisplaysCorrectMessage()
         {
             //ARRANGE
-            IPhoneState connected = Substitute.For<IPhoneState>();
-            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
-            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected;
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -83,9 +82,8 @@ namespace Ladeskab.Unit.Tests
         public void HandleOpenDoor_ChargeControlIsNotConnected_SetsStateToDoorOpen()
         {
             //ARRANGE
-            IPhoneState connected = Substitute.For<IPhoneState>();
-            controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected.ReturnsForAnyArgs(connected);
-            controlSubstitute.ChargeControl.UsbCharger.PhoneState.ReturnsForAnyArgs(connected);
+            controlSubstitute.ChargeControl.UsbCharger.PhoneState =
+                controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected;
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
