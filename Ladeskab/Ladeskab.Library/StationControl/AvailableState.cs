@@ -7,6 +7,8 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(IControl stationControl)
         {
+            stationControl.Disp.DisplayMessage("Door is opening...");
+            System.Threading.Thread.Sleep(1000);
             if (!stationControl.ChargeControl.IsConnected())
             {
                 stationControl.Disp.DisplayMessage("Please connect a phone");
@@ -21,11 +23,13 @@ namespace Ladeskab.Library.StationControl
 
         public void HandleClosedDoor(IControl stationControl)
         {
+            stationControl.Disp.DisplayMessage("Door is already closed");
             //Do nothing, door is already closed
         }
 
         public void HandleRfid(IControl stationControl, int id)
         {
+            stationControl.Disp.DisplayMessage("RFID scanned with id:" + id);
             if (!stationControl.ChargeControl.IsConnected())
             {
                 stationControl.Disp.DisplayMessage("ERROR: Phone not connected");

@@ -22,6 +22,18 @@ namespace Ladeskab.Unit.Tests
             controlSubstitute = Substitute.For<IControl>();
             uut = new AvailableState();
         }
+        [Test]
+        public void HandleOpenDoor_ChargeControlIrrelevant_DisplayCorrectStartMessage()
+        {
+            //ARRANGE
+            //irrelevant
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door is opening...");
+        }
 
         [Test]
         public void HandleOpenDoor_ChargeControlIsConnected_DisplaysCorrectMessage()
@@ -87,6 +99,18 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             //Assert that substitute received no calls
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void HandleRfid_Irrelevant_DisplayCorrectIDInMessage()
+        {
+            //ARRANGE
+            //Irrelevant
+
+            //ACT
+            uut.HandleRfid(controlSubstitute, 12345);
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("RFID scanned with id:" + 12345);
         }
 
         [Test]
