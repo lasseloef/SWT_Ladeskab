@@ -1,15 +1,20 @@
-﻿namespace Ladeskab.Library.ChargeControl
+﻿using System;
+
+namespace Ladeskab.Library.ChargeControl
 {
     public class UnConnectedPhoneState : IPhoneState
     {
+        public event EventHandler<EventArgs> ConnectionEvent;
+        public event EventHandler<EventArgs> DisconnectionEvent;
+
         public void HandleConnectionTry(IUsbCharger usbCharger)
         {
             if (usbCharger.Door.Open)
             {
-                //Disp.DisplayMessage($"Phone is connected");
                 usbCharger.SetPhoneState(usbCharger.PhoneConnected);
-                //Debugging
-                //usbCharger.Disp.DisplayMessage($"\nCurrent Phone state: {usbCharger.PhoneState}");
+
+                //Send notice to StationControl, so it can display info
+                OnConnection();
             }
             else
             {
@@ -18,7 +23,18 @@
         }
         public void HandleDisconnectionTry(IUsbCharger usbCharger)
         {
-            //usbCharger.Disp.DisplayMessage("A phone is not connected");
+            //Send notice to StationControl, so it can display info
+            OnDisconnection();
+        }
+
+        private void OnConnection()
+        {
+            ConnectionEvent?.Invoke(this, new EventArgs());
+        }
+
+        private void OnDisconnection()
+        {
+            DisconnectionEvent?.Invoke(this, new EventArgs());
         }
     }
 }

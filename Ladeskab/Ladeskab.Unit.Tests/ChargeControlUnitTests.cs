@@ -34,12 +34,13 @@ namespace Ladeskab.Unit.Tests
         }
 
         #region IsConnected
-
+        /*
         [Test]
         public void IsConnected_UsbChargerReturnsConnected_ReturnsConnected()
         {
             //ARRANGE
             UsbChargerSubstitute.Connected.Returns(true);
+
 
             //ACT
             bool result = uut.IsConnected();
@@ -61,6 +62,7 @@ namespace Ladeskab.Unit.Tests
             Assert.That(result, Is.False);
         }
 
+        */
         #endregion
 
         #region StartCharge

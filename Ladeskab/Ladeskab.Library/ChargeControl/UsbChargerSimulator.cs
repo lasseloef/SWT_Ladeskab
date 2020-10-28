@@ -43,6 +43,7 @@ namespace Ladeskab.Library.ChargeControl
             //Phone States
             PhoneConnected = new ConnectedPhoneState();
             PhoneUnConnected = new UnConnectedPhoneState();
+            PhoneState = PhoneUnConnected;
         }
 
         public UsbChargerSimulator(IPhoneState connected, IPhoneState unConnected, IDoor door)
@@ -58,6 +59,7 @@ namespace Ladeskab.Library.ChargeControl
             //Phone States
             PhoneConnected = connected;
             PhoneUnConnected = unConnected;
+            PhoneState = PhoneUnConnected;
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
@@ -87,11 +89,13 @@ namespace Ladeskab.Library.ChargeControl
 
         public void SimulateConnected(bool connected)
         {
-            if(connected)
-                SetPhoneState(PhoneConnected);
+            if (connected)
+            {
+                PhoneState.HandleConnectionTry(this);
+            }
             else
             {
-                SetPhoneState(PhoneUnConnected);
+                PhoneState.HandleDisconnectionTry(this);
             }   
         }
 
@@ -141,6 +145,7 @@ namespace Ladeskab.Library.ChargeControl
         {
             CurrentValueEvent?.Invoke(this, new CurrentEventArgs() {Current = this.CurrentValue});
         }
+
 
         public void SetPhoneState(IPhoneState state)
         {

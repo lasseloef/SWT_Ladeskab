@@ -41,17 +41,8 @@ namespace Ladeskab.Application
                 {
                     case ConsoleKey.P:
 
-                        if (stationControl.PhoneState == typeof(ConnectedPhoneState))
-                        { 
-                            connected = true;
-                            ((UsbChargerSimulator)sim).SimulateConnected(connected);
-                        }
-                        else
-                        {
-                            connected = false;
-                            ((UsbChargerSimulator)sim).SimulateConnected(connected);
-                        }
-
+                        connected = !connected;
+                        ((UsbChargerSimulator)sim).SimulateConnected(connected);
                         break;
 
                     case ConsoleKey.S:

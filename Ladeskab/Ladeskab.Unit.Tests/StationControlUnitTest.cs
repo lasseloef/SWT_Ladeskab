@@ -8,7 +8,6 @@ using Ladeskab.Library.Door;
 using Ladeskab.Library.Logger;
 using Ladeskab.Library.RfidReader;
 using Ladeskab.Library.StationControl;
-using Ladeskab.Library.StationControl.PhoneState;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.DataCollection;
 using NSubstitute;
 using NUnit.Framework;
@@ -27,8 +26,6 @@ namespace Ladeskab.Unit.Tests
         private ILadeskabState _lockedSubstitute;
         private IRfidReader _rfidReaderSubstitute;
         private IChargeControl _chargeControlSubstitute;
-        private IPhoneState _phoneConnectedSubstitute;
-        private IPhoneState _phoneUnConnectedSubstitute;
 
         [SetUp]
         public void StationControlUnitTestSetup()
@@ -41,11 +38,10 @@ namespace Ladeskab.Unit.Tests
             _lockedSubstitute = Substitute.For<ILadeskabState>();
             _rfidReaderSubstitute = Substitute.For<IRfidReader>();
             _chargeControlSubstitute = Substitute.For<IChargeControl>();
-            _phoneConnectedSubstitute = Substitute.For<IPhoneState>();
-            _phoneUnConnectedSubstitute = Substitute.For<IPhoneState>();
+
 
             _uut = new StationControl(_loggerSubstitute, _displaySubstitute, _doorSubstitute, _availableSubstitute, 
-                _doorOpenSubstitute, _lockedSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute, _phoneConnectedSubstitute, _phoneUnConnectedSubstitute);
+                _doorOpenSubstitute, _lockedSubstitute, _rfidReaderSubstitute, _chargeControlSubstitute);
 
             _uut.SetState(_availableSubstitute);
         }

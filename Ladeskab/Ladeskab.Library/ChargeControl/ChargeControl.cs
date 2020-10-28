@@ -12,6 +12,12 @@ namespace Ladeskab.Library.ChargeControl
         {
             UsbCharger = usbCharger;
             UsbCharger.CurrentValueEvent += OnUsbChargerCurrentValueEvent;
+
+            UsbCharger.PhoneUnConnected.ConnectionEvent += UnConnectedOnConnectionEvent;
+            UsbCharger.PhoneUnConnected.DisconnectionEvent += UnConnectedOnDisconnectionEvent;
+
+            UsbCharger.PhoneConnected.ConnectionEvent += ConnectedOnConnectionEvent;
+            UsbCharger.PhoneConnected.DisconnectionEvent += ConnectedOnDisconnectionEvent;
         }
 
         private void OnUsbChargerCurrentValueEvent(object sender, CurrentEventArgs args)
@@ -56,12 +62,6 @@ namespace Ladeskab.Library.ChargeControl
             }
         }
 
-        public bool IsConnected()
-        {
-            return UsbCharger.Connected;
-        }
-
-
         public void StartCharge()
         {
             UsbCharger.StartCharge();
@@ -72,6 +72,30 @@ namespace Ladeskab.Library.ChargeControl
             UsbCharger.StopCharge();
         }
 
+        public void UnConnectedOnConnectionEvent(object sender, EventArgs e)
+        {
+            UnConnectedConnectionEvent?.Invoke(this, e);
+        }
+
+        public void UnConnectedOnDisconnectionEvent(object sender, EventArgs e)
+        {
+            UnConnectedDisconnectionEvent?.Invoke(this, e);
+        }
+
+        public void ConnectedOnConnectionEvent(object sender, EventArgs e)
+        {
+            ConnectedConnectionEvent?.Invoke(this, e);
+        }
+
+        public void ConnectedOnDisconnectionEvent(object sender, EventArgs e)
+        {
+            ConnectedDisconnectionEvent?.Invoke(this, e);
+        }
+
         public event EventHandler<ChargerEventArgs> ChargeEvent;
+        public event EventHandler<EventArgs> UnConnectedConnectionEvent;
+        public event EventHandler<EventArgs> UnConnectedDisconnectionEvent;
+        public event EventHandler<EventArgs> ConnectedConnectionEvent;
+        public event EventHandler<EventArgs> ConnectedDisconnectionEvent;
     }
 }

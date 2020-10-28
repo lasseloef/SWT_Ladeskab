@@ -4,7 +4,6 @@ using Ladeskab.Library.Display;
 using Ladeskab.Library.Door;
 using Ladeskab.Library.Logger;
 using Ladeskab.Library.RfidReader;
-using Ladeskab.Library.StationControl.PhoneState;
 
 namespace Ladeskab.Library.StationControl
 {
@@ -39,7 +38,10 @@ namespace Ladeskab.Library.StationControl
 
             //Events
             ChargeControl.ChargeEvent += OnChargeControlChargeEvent;
-            ChargeControl.ConnectionEvent += OnPhoneConnectionEvent;
+            ChargeControl.UnConnectedConnectionEvent += UnConnectedOnConnectionEvent;
+            ChargeControl.UnConnectedDisconnectionEvent += UnConnectedOnDisconnectionEvent;
+            ChargeControl.UnConnectedConnectionEvent += ConnectedOnConnectionEvent;
+            ChargeControl.UnConnectedDisconnectionEvent += ConnectedOnDisconnectionEvent;
             RfidReader.RfidReadEvent += OnRfidReaderRfidRead;
             Door.DoorOpenedEvent += OnDoorOpened;
             Door.DoorClosedEvent += OnDoorClosed;
@@ -103,14 +105,31 @@ namespace Ladeskab.Library.StationControl
             State = state;
         }
 
-        public void OnPhoneConnectionEvent(object sender, ConnectionEventArgs e)
+        public void UnConnectedOnConnectionEvent(object sender, EventArgs e)
         {
-            if(!e.Connection) 
-                PhoneState.HandleConnectionTry(this);
-            else
-            { 
-                PhoneState.HandleDisconnectionTry(this);
-            }
+            Disp.DisplayMessage($"Phone is connected");
+
+            //Debugging
+            Disp.DisplayMessage($"\nCurrent Phone state: {ChargeControl.UsbCharger.PhoneState}");
+        }
+
+        public void UnConnectedOnDisconnectionEvent(object sender, EventArgs e)
+        {
+            Disp.DisplayMessage("A phone is not connected");
+        }
+
+        public void ConnectedOnConnectionEvent(object sender, EventArgs e)
+        {
+            Disp.DisplayMessage("A phone is already connected");
+        }
+
+        public void ConnectedOnDisconnectionEvent(object sender, EventArgs e)
+        {
+            Disp.DisplayMessage($"Phone is disconnected");
+
+            //Debugging
+            Disp.DisplayMessage($"\nCurrent Phone state: {ChargeControl.UsbCharger.PhoneState}");
+
         }
     }
 }

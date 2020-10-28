@@ -9,7 +9,7 @@ namespace Ladeskab.Library.StationControl
         {
             stationControl.Disp.DisplayMessage("Door is opening...");
             System.Threading.Thread.Sleep(1000);
-            if (!stationControl.ChargeControl.IsConnected())
+            if (stationControl.ChargeControl.UsbCharger.PhoneState == stationControl.ChargeControl.UsbCharger.PhoneUnConnected)
             {
                 stationControl.Disp.DisplayMessage("Please connect a phone");
                 stationControl.SetState(stationControl.DoorOpen);
@@ -34,7 +34,7 @@ namespace Ladeskab.Library.StationControl
         public void HandleRfid(IControl stationControl, int id)
         {
             stationControl.Disp.DisplayMessage("RFID scanned with id:" + id);
-            if (!stationControl.ChargeControl.IsConnected())
+            if (stationControl.ChargeControl.UsbCharger.PhoneState == stationControl.ChargeControl.UsbCharger.PhoneUnConnected)
             {
                 stationControl.Disp.DisplayMessage("ERROR: Phone not connected");
             }

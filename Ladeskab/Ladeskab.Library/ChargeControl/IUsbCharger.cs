@@ -14,6 +14,7 @@ namespace Ladeskab.Library.ChargeControl
     {
         // Event triggered on new current value
         event EventHandler<CurrentEventArgs> CurrentValueEvent;
+
         public IPhoneState PhoneState { get; }
         public IPhoneState PhoneConnected { get; }
         public IPhoneState PhoneUnConnected { get; }
