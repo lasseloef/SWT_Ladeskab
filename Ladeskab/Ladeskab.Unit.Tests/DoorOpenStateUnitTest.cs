@@ -23,7 +23,7 @@ namespace Ladeskab.Unit.Tests
             uut = new DoorOpenState();
         }
 
-        [Test]
+        /*[Test]
         public void HandleOpenDoor_Called_stationControlReceivedNoCalls()
         {
             //ARRANGE
@@ -35,7 +35,7 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             //Assert that substitute received no calls
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
-        }
+        }*/
 
         [Test]
         public void HandleClosedDoor_Called_stationControlStateSetToAvailable()

@@ -100,8 +100,8 @@ namespace Ladeskab.Unit.Tests
 
             //ASSERT
             //Assert that substitute received no calls
-            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));*/
-        }
+            Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
+        }*/
 
         [Test]
         public void HandleRfid_Irrelevant_DisplayCorrectIDInMessage()

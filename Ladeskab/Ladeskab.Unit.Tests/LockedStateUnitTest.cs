@@ -49,7 +49,7 @@ namespace Ladeskab.Unit.Tests
             controlSubstitute.Disp.Received().DisplayMessage("Door is already locked");
         }
 
-        [Test]
+        /*[Test]
         public void HandleClosedDoor_Called_stationControlReceivedNoCalls()
         {
             //ARRANGE
@@ -61,7 +61,7 @@ namespace Ladeskab.Unit.Tests
             //ASSERT
             //Assert that substitute received no calls
             Assert.That(controlSubstitute.ReceivedCalls().Count(), Is.EqualTo(0));
-        }
+        }*/
 
         [Test]
         public void HandleRfid_CalledAnyId_stationControlDispDisplaysCorrectMessage()
