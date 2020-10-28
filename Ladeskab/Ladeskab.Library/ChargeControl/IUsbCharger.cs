@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Dynamic;
 using Ladeskab.Library.Door;
+using Ladeskab.Library.StationControl;
 
 namespace Ladeskab.Library.ChargeControl
 {
@@ -15,10 +16,9 @@ namespace Ladeskab.Library.ChargeControl
         // Event triggered on new current value
         event EventHandler<CurrentEventArgs> CurrentValueEvent;
 
-        public IPhoneState PhoneState { get; }
+        public IPhoneState PhoneState { get; set; }
         public IPhoneState PhoneConnected { get; }
         public IPhoneState PhoneUnConnected { get; }
-        public IDoor Door { get; }
 
         // Direct access to the current current value
         double CurrentValue { get; }
@@ -28,6 +28,6 @@ namespace Ladeskab.Library.ChargeControl
         // Stop charging
         void StopCharge();
 
-        void SetPhoneState(IPhoneState state);
+        public IControl Controller { get; set; }
     }
 }

@@ -9,22 +9,18 @@ namespace Ladeskab.Library.ChargeControl
 
         public void HandleConnectionTry(IUsbCharger usbCharger)
         {
-            if (usbCharger.Door.Open)
+            if (usbCharger.Controller.State == usbCharger.Controller.DoorOpen)
             {
-                usbCharger.SetPhoneState(usbCharger.PhoneConnected);
-
-                //Send notice to StationControl, so it can display info
+                usbCharger.PhoneState = usbCharger.PhoneConnected;
                 OnConnection();
-            }
-            else
-            {
-                //usbCharger.Disp.DisplayMessage("Can't connect phone, door is closed");
             }
         }
         public void HandleDisconnectionTry(IUsbCharger usbCharger)
         {
-            //Send notice to StationControl, so it can display info
-            OnDisconnection();
+            if (usbCharger.Controller.State == usbCharger.Controller.DoorOpen)
+            {
+                OnDisconnection();
+            }
         }
 
         private void OnConnection()

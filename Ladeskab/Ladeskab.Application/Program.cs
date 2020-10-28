@@ -16,13 +16,15 @@ namespace Ladeskab.Application
             IDoor door = new Door();
             IRfidReader rfidReader = new RfidReader();
 
-            IUsbCharger sim = new UsbChargerSimulator(door);
+            IUsbCharger sim = new UsbChargerSimulator();
             IChargeControl chargeControl = new ChargeControl(sim);
 
 
             //Classes only used inside stationControl just declared in ctor args
             StationControl stationControl = new StationControl(new Logger(), new Display(), door, rfidReader, chargeControl);
-
+            
+            //Circular dependency
+            sim.Controller = stationControl;
 
             //User interaction:
             

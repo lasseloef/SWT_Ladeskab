@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Timers;
 using Ladeskab.Library.Door;
+using Ladeskab.Library.StationControl;
 
 namespace Ladeskab.Library.ChargeControl
 {
     public class UsbChargerSimulator : IUsbCharger
     {
-        public IPhoneState PhoneState { get; private set; }
+        public IPhoneState PhoneState { get; set; }
         public IPhoneState PhoneConnected { get; private set; }
         public IPhoneState PhoneUnConnected { get; private set; }
-        public IDoor Door { get; private set; }
+        public IControl Controller { get; set; }
 
         // Constants
         private const double MaxCurrent = 500.0; // mA
@@ -28,7 +29,7 @@ namespace Ladeskab.Library.ChargeControl
         private System.Timers.Timer _timer;
         private int _ticksSinceStart;
 
-        public UsbChargerSimulator(IDoor door)
+        public UsbChargerSimulator()
         {
             CurrentValue = 0.0;
             _overload = false;
@@ -38,7 +39,7 @@ namespace Ladeskab.Library.ChargeControl
             _timer.Interval = CurrentTickInterval;
             _timer.Elapsed += TimerOnElapsed;
 
-            Door = door;
+            //Must know about the controller, since a phone shouldn't be able to be connected or disconnected when door is closed.
 
             //Phone States
             PhoneConnected = new ConnectedPhoneState();
@@ -46,7 +47,7 @@ namespace Ladeskab.Library.ChargeControl
             PhoneState = PhoneUnConnected;
         }
 
-        public UsbChargerSimulator(IPhoneState connected, IPhoneState unConnected, IDoor door)
+        public UsbChargerSimulator(IPhoneState connected, IPhoneState unConnected, IControl controller)
         {
             CurrentValue = 0.0;
             _overload = false;
@@ -60,6 +61,7 @@ namespace Ladeskab.Library.ChargeControl
             PhoneConnected = connected;
             PhoneUnConnected = unConnected;
             PhoneState = PhoneUnConnected;
+
         }
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
@@ -89,7 +91,7 @@ namespace Ladeskab.Library.ChargeControl
 
         public void SimulateConnected(bool connected)
         {
-            if (connected)
+            if (!connected)
             {
                 PhoneState.HandleConnectionTry(this);
             }
