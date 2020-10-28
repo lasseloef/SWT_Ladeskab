@@ -66,8 +66,9 @@ namespace Ladeskab.Library.StationControl
         {
             //Sæt evt. i constructor
             State = Available;
+            Disp.DisplayMessage($"\nCurrent state: {State}");
             Door.UnlockDoor();
-            Disp.DisplayMessage("Scan RFID");
+            Disp.DisplayMessage("\nDoor unlocked. Open door and connect your phone");
         }
 
         public void OnChargeControlChargeEvent(object sender, ChargerEventArgs e)

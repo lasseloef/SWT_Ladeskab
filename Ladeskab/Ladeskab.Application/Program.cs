@@ -49,7 +49,7 @@ namespace Ladeskab.Application
                         ((UsbChargerSimulator)sim).SimulateOverload(shorted);
                         break;
 
-                    case ConsoleKey.D:
+                    case ConsoleKey.O:
                         ((Door) door).OpenDoor();
                         break;
 
