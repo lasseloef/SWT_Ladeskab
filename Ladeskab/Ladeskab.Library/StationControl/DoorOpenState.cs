@@ -7,7 +7,8 @@ namespace Ladeskab.Library.StationControl
     {
         public void HandleOpenDoor(IControl stationControl)
         {
-            //Do nothing, door is already open
+            stationControl.Disp.DisplayMessage("Door already open");
+            //Do nothing - door already open.
         }
 
         public void HandleClosedDoor(IControl stationControl)

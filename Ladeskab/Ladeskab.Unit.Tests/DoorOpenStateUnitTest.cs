@@ -50,6 +50,19 @@ namespace Ladeskab.Unit.Tests
         }
 
         [Test]
+        public void HandleOpenDoor_Called_StationControlDispDisplaysCorrectMessage()
+        {
+            //ARRANGE
+            //arrange step completed in setup
+
+            //ACT
+            uut.HandleOpenDoor(controlSubstitute);
+
+            //ASSERT
+            controlSubstitute.Disp.Received().DisplayMessage("Door already open");
+        }
+
+        [Test]
         public void HandleClosedDoor_Called_stationControlDispDisplaysCorrectMessage()
         {
             //ARRANGE
