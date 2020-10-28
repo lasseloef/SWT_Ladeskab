@@ -21,7 +21,7 @@ namespace Ladeskab.Unit.Tests
         {
             controlSubstitute = Substitute.For<IControl>();
             uut = new AvailableState();
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneUnConnected);
         }
         [Test]
         public void HandleOpenDoor_ChargeControlIrrelevant_DisplayCorrectStartMessage()
@@ -41,7 +41,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -55,7 +55,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleOpenDoor(controlSubstitute);
@@ -201,7 +201,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -215,7 +215,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -229,7 +229,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -243,7 +243,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
@@ -257,7 +257,7 @@ namespace Ladeskab.Unit.Tests
         {
             //ARRANGE
             //controlSubstitute.ChargeControl.IsConnected().Returns(true);
-            controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
+            //controlSubstitute.ChargeControl.UsbCharger.SetPhoneState(controlSubstitute.ChargeControl.UsbCharger.PhoneConnected);
 
             //ACT
             uut.HandleRfid(controlSubstitute, 12345);
