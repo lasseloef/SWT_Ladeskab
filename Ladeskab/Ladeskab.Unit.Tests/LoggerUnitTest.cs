@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using Ladeskab.Library.Logger;
 using System.IO;
+using NSubstitute;
 
 namespace Ladeskab.Unit.Tests
 {
@@ -12,6 +13,7 @@ namespace Ladeskab.Unit.Tests
     {
         private Logger uut;
         StringWriter result;
+
         [SetUp]
 
         public void setup()
