@@ -29,7 +29,7 @@ namespace Ladeskab.Library.Logger
         public void LogDoorUnlocked(int id)
         {
             using (TextWriter log = GetTextWriter()){
-                log.WriteLine("LOG: Door Unlcoked by: " + id);
+                log.WriteLine("LOG: Door unlocked by: " + id);
                 log.Write($"{DateTime.Now.ToLongDateString()} - {DateTime.Now.ToShortTimeString()}");
             }
             Console.WriteLine("LOG: Door unlocked by: " + id );
