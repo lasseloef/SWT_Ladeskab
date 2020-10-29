@@ -103,9 +103,10 @@ ILadeskabState
       <x>252</x>
       <y>217</y>
       <w>70</w>
-      <h>21</h>
+      <h>28</h>
     </coordinates>
-    <panel_attributes>IControl</panel_attributes>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IControl</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

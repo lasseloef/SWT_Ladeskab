@@ -81,9 +81,10 @@ IPhoneState
       <x>300</x>
       <y>200</y>
       <w>100</w>
-      <h>30</h>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>IUSBCharger</panel_attributes>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+IUSBCharger</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
