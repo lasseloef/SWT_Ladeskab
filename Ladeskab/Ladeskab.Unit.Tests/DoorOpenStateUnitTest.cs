@@ -62,7 +62,6 @@ namespace Ladeskab.Unit.Tests
             uut.HandleClosedDoor(controlSubstitute);
 
             //ASSERT
-            controlSubstitute.Disp.Received().DisplayMessage("Door being closed");
             controlSubstitute.Disp.Received().DisplayMessage("Door is closed");
         }
 
