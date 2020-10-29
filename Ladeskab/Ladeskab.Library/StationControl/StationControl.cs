@@ -9,11 +9,11 @@ namespace Ladeskab.Library.StationControl
 {
     public class StationControl : IControl
     {
-        public ILadeskabState State { get; private set; }
+        public ILadeskabState State { get; set; }
         //evt public getter private setter
-        public ILadeskabState Available { get; private set; }
-        public ILadeskabState DoorOpen { get; private set; }
-        public ILadeskabState Locked { get; private set; }
+        public ILadeskabState Available { get; set; }
+        public ILadeskabState DoorOpen { get; set; }
+        public ILadeskabState Locked { get; set; }
         public IRfidReader RfidReader { get; private set; }
         public IChargeControl ChargeControl { get; private set; }
         public ILogger Logger { get; private set; }
