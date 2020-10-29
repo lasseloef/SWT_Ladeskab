@@ -13,6 +13,7 @@ namespace Ladeskab.Unit.Tests
     {
         private Logger uut;
         StringWriter result;
+        TextWriter TestWriter;
 
         [SetUp]
 
@@ -49,6 +50,15 @@ namespace Ladeskab.Unit.Tests
         {
             uut.LogDoorUnlocked(123);
             Assert.That(uut.writer.ToString(), Is.EqualTo("LOG: Door unlocked by: 123\r\n"+ $"{DateTime.Now.ToLongDateString()} - {DateTime.Now.ToShortTimeString()}"));
+        }
+
+        [Test]
+        public void GetTextWriter_WriterNotSet_ReturnStreamWriter()
+        {
+            uut.writer = TestWriter;
+            uut.GetTextWriter();
+
+            Assert.IsTrue(uut.writer is StreamWriter);
         }
 
     }
